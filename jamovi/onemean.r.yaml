@@ -21,7 +21,6 @@ items:
 
     - name:  tablestyle_ttest
       type:  Html
-      visible: (variable)
 
 
     - name:  tablestyle_tolerance
