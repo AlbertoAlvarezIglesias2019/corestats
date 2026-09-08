@@ -1,7 +1,7 @@
 ---
 name:  scatterplot
 title: Scatterplot
-menuGroup: CoreStats
+menuGroup: corestats
 version: '1.0.0'
 jas: '1.2'
 
@@ -110,17 +110,17 @@ options:
 
     - name: font_size # <-- This is the name R will use
       type: Number
-      default: 14
+      default: 21
       hidden: true
 
     - name: point_size  # <-- NEW OPTION
       type: Number
-      default: 2.5
+      default: 6
       hidden: true
 
     - name: line_size  # <-- NEW OPTION
       type: Number
-      default: 1
+      default: 3
       hidden: true
 
     - name: main_title
