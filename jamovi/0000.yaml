@@ -16,7 +16,7 @@ analyses:
     name: scatterplot
     ns: corestats
     category: analyses
-    menuGroup: CoreStats
+    menuGroup: corestats
     menuSubgroup: Graphs
     menuTitle: Scatterplot
   - title: Boxplot
