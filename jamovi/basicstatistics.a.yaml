@@ -1,0 +1,108 @@
+---
+name:  basicstatistics
+title: Basic Statistics
+menuGroup: corestats
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+
+    - name: outcome
+      title: Outcome/s
+      type: Variables
+
+    - name: group_by
+      title: Group by
+      type: Variable
+      suggested: [ ordinal, nominal ]
+      permitted: [ factor ]
+      
+    - name: addp
+      title: Add P-value
+      type: Bool
+      default: false   
+
+    - name: addt
+      title: Add Overall
+      type: Bool
+      default: false   
+
+    - name: addn
+      title: Add N
+      type: Bool
+      default: false   
+      
+    - name: miss_yn
+      title: Include Missing
+      type: Bool
+      default: false  
+      
+    - name: nd_num
+      type: Integer
+      default: 1
+      hidden: true
+   
+    - name: nd_cat
+      type: Integer
+      default: 1
+      hidden: true  
+      
+    - name: suco
+      title: Customised
+      type: List
+      options:
+        - title: Mean (SD)
+          name:  meansd
+        - title: Median (IQR)
+          name:  medianiqr
+        - title: Median (Q1,Q3)
+          name:  medianqs
+      default: meansd
+      
+    - name: allco
+      title: All Descriptives
+      type: Bool
+      default: false  
+      
+    - name: suca
+      type: List
+      options:
+        - title: "n"
+          name:  n
+        - title: "%"
+          name:  p
+        - title: "n / N (%)"
+          name:  nNp
+        - title: "n (%)"
+          name:  np
+        - title: "% (n)"
+          name:  pn
+      default: nNp
+      
+      
+      
+    - name: miss_text
+      type: String
+      hidden: true
+
+    - name: outcome_text
+      type: String
+      hidden: true
+      
+    - name: groupby_text
+      type: String
+      hidden: true
+      
+    - name: font_size # <-- This is the name R will use
+      type: Number
+      default: 14
+      hidden: true
+
+    - name: main_title
+      type: String
+      hidden: true
+      
+      
+...

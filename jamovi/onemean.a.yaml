@@ -1,0 +1,187 @@
+---
+name:  onemean
+title: One-Sample t
+menuGroup: corestats
+version: '1.0.0'
+jas: '1.2'
+
+options:
+
+    - name: input_mode
+      type: List
+      options:
+        - use_variables
+        - use_matrix
+      default: use_variables
+      
+      
+    - name: data
+      type: Data
+
+    - name: variable
+      title: Outcome
+      type: Variable
+      suggested: [ continuous ]
+      permitted: [ numeric ]
+      
+    - name: nd_num
+      type: Integer
+      default: 1
+      hidden: true   
+      
+    - name: miss_yn
+      title: Include Missing
+      type: Bool
+      default: false  
+      
+
+    - name: font_size # <-- This is the name R will use
+      type: Number
+      default: 14
+      hidden: true
+
+      
+    - name: testyn_ttest
+      title: Perform hypothesis test
+      type: Bool
+      default: false 
+      
+    - name: conf_ttest
+      title: Confidence level
+      type: Number
+      min: 0
+      max: 100
+      default: 95  
+      
+    - name: nh_ttest
+      title: hypothesised mean
+      type: Number
+      default: 0  
+      
+    - name: alt_ttest
+      title: Alternative hypothesis
+      type: List
+      options:
+        - title: Greater
+          name:  greater
+        - title: Less
+          name:  less
+        - title: Two-sided
+          name:  two.sided
+      default: two.sided
+      
+
+    - name: summ_n
+      title: N
+      type: Number
+      default: 100  
+      hidden: true
+      
+    - name: summ_mean
+      title: Mean
+      type: Number
+      default: 50  
+      hidden: true
+
+    - name: summ_sd
+      title: SD
+      type: Number
+      default: 20  
+      hidden: true
+      
+    - name: norma_assess_yn
+      title: Normality Assessment
+      type: Bool
+      default: false 
+ 
+    - name: tolerance_yn
+      title: Calculate interval
+      type: Bool
+      default: false 
+      
+    - name: conf_tolerance
+      title: Confidence level
+      type: Number
+      min: 0
+      max: 100
+      default: 95  
+      
+    - name: poco_tolerance
+      title: Proportion Covered
+      type: Number
+      min: 0
+      max: 100
+      default: 95 
+      
+    - name: side_tolerance
+      title: Side
+      type: List
+      options:
+        - title: 1-sided
+          name:  "1"
+        - title: 2-sided
+          name:  "2"
+      default: "2"
+      
+    - name: tolerance_controlcharts_yn
+      title: Tolerance Control Charts
+      type: Bool
+      default: false 
+    - name: plotype_tolerance
+      title: Type
+      type: List
+      options:
+        - title: Control Chart
+          name:  control
+        - title: Histogram
+          name:  hist
+        - title: Both
+          name:  both          
+      default: control
+      
+    - name: boot_yn
+      title: Calculate interval
+      type: Bool
+      default: false 
+      
+    - name: conf_boot
+      title: Confidence level
+      type: Number
+      min: 0
+      max: 100
+      default: 95  
+      
+    - name: testyn_boot
+      title: Perform hypothesis test
+      type: Bool
+      default: false 
+      
+    - name: nh_boot
+      title: hypothesised proportion
+      type: Number
+      default: 0  
+      
+    - name: alt_boot
+      title: Alternative hypothesis
+      type: List
+      options:
+        - title: Greater
+          name:  greater
+        - title: Less
+          name:  less
+        - title: Two-sided
+          name:  two-sided
+      default: two-sided
+
+      
+    - name: boot_nullplot_yn
+      title: Plot Null Distribution
+      type: Bool
+      default: false 
+      
+      
+    - name: boot_intervalplot_yn
+      title: Visualise intervals
+      type: Bool
+      default: false
+...

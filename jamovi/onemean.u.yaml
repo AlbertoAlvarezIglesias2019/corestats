@@ -1,0 +1,157 @@
+title: One-Sample t
+name: onemean
+jus: '3.0'
+stage: 0
+compilerMode: tame
+children:
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: Label
+        label: Data Input Method
+        children:
+          - type: RadioButton
+            name: mode_variables_btn
+            optionName: input_mode
+            optionPart: use_variables
+            label: Variables from dataset
+          - type: RadioButton
+            name: mode_matrix_btn
+            optionName: input_mode
+            optionPart: use_matrix
+            label: Summarised data in a table
+  - type: VariableSupplier
+    name: variables_panel
+    suggested:
+      - continuous
+    permitted:
+      - numeric
+    persistentItems: false
+    stretchFactor: 1
+    children:
+      - type: TargetLayoutBox
+        label: Outcome
+        children:
+          - type: VariablesListBox
+            name: variable
+            maxItemCount: 1
+            isTarget: true
+  - type: CustomControl
+    name: summary_input_container
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: norma_assess_yn
+        enable: (variable)
+  - type: Label
+    label: Confidence Interval
+    children:
+      - type: LayoutBox
+        margin: large
+        children:
+          - type: TextBox
+            name: conf_ttest
+            format: number
+  - type: Label
+    label: Hypothesis Test
+    children:
+      - type: LayoutBox
+        margin: large
+        children:
+          - type: CheckBox
+            name: testyn_ttest
+          - type: TextBox
+            name: nh_ttest
+            format: number
+            enable: (testyn_ttest)
+          - type: ComboBox
+            name: alt_ttest
+  - type: CollapseBox
+    label: Options
+    collapsed: true
+    margin: large
+    children:
+      - type: Label
+        label: General
+        children:
+          - type: LayoutBox
+            margin: large
+            children:
+              - type: CheckBox
+                name: miss_yn
+      - type: CustomControl
+        name: decimal_inputs
+      - type: Label
+        label: Size
+        children:
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: CustomControl
+                name: size_inputs
+  - type: CollapseBox
+    label: Tolerance Intervals
+    collapsed: true
+    margin: large
+    children:
+      - type: CheckBox
+        name: tolerance_yn
+        enable: (variable)
+      - type: TextBox
+        name: conf_tolerance
+        enable: (tolerance_yn)
+        format: number
+      - type: TextBox
+        name: poco_tolerance
+        format: number
+        enable: (tolerance_yn)
+      - type: ComboBox
+        name: side_tolerance
+        enable: (tolerance_yn)
+      - type: CheckBox
+        name: tolerance_controlcharts_yn
+        enable: (tolerance_yn)
+      - type: ComboBox
+        name: plotype_tolerance
+        enable: (tolerance_yn && tolerance_controlcharts_yn)
+  - type: CollapseBox
+    label: Bootstrap
+    collapsed: true
+    margin: large
+    children:
+      - type: CheckBox
+        name: boot_yn
+        enable: (variable)
+      - type: Label
+        label: Bootstrap Interval
+        children:
+          - type: LayoutBox
+            margin: large
+            children:
+              - type: TextBox
+                name: conf_boot
+                format: number
+                enable: (boot_yn)
+              - type: CheckBox
+                name: boot_intervalplot_yn
+                enable: (boot_yn)
+      - type: Label
+        label: Bootstrap Hypothesis Test
+        children:
+          - type: LayoutBox
+            margin: large
+            children:
+              - type: CheckBox
+                name: testyn_boot
+                enable: (boot_yn)
+              - type: TextBox
+                name: nh_boot
+                format: number
+                enable: (testyn_boot && boot_yn)
+              - type: ComboBox
+                name: alt_boot
+                enable: (testyn_boot && boot_yn)
+              - type: CheckBox
+                name: boot_nullplot_yn
+                enable: (boot_yn && testyn_boot)

@@ -1,0 +1,115 @@
+title: Boxplot
+name: boxplot
+jus: '3.0'
+stage: 0
+compilerMode: tame
+children:
+  - type: VariableSupplier
+    persistentItems: false
+    stretchFactor: 1
+    children:
+      - type: TargetLayoutBox
+        label: Y-axis (Response)
+        children:
+          - type: VariablesListBox
+            name: y_axis
+            maxItemCount: 1
+            isTarget: true
+      - type: TargetLayoutBox
+        label: X-axis (Grouping variable)
+        children:
+          - type: VariablesListBox
+            name: x_axis
+            maxItemCount: 1
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Color by
+        children:
+          - type: VariablesListBox
+            name: color_by
+            maxItemCount: 1
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Panel by
+        children:
+          - type: VariablesListBox
+            name: panel_by
+            maxItemCount: 1
+            isTarget: true
+
+
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: Label
+        label: General
+        children:
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: Label
+                label: 'Legend position'
+              - type: ComboBox
+                name: legend_pos
+          - type: CheckBox
+            name: miss_yn
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: Label
+                label: 'Log transform:'
+              - type: CheckBox
+                name: y_axis_logyn      # Make sure this matches your exact variable name in .a.yaml
+                label: Y-axis
+          - type: CheckBox
+            name: flip_yn
+          - type: CheckBox
+            name: addData_yn
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: Label
+                label: 'Add reference line'
+              - type: CheckBox
+                name: line_yn
+              - type: TextBox
+                name: line_val
+                label: Value
+                format: string
+                enable: (line_yn)
+
+  - type: CollapseBox
+    label: Appearance
+    collapsed: true
+    margin: large
+    children:
+      - type: Label
+        label: Axis
+        children:
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: Label
+                label: 'Axis increments:'
+              - type: TextBox
+                name: y_inc
+                label: Y-axis
+                format: string
+      - type: Label
+        label: Element Sizes
+        children:
+          - type: LayoutBox
+            style: inline
+            children:
+            - type: CustomControl
+              name: size_inputs
+
+
+
+  - type: CollapseBox
+    label: Plot Labels & Text
+    collapsed: true
+    margin: large
+    children:
+      - type: CustomControl
+        name: plotLabels

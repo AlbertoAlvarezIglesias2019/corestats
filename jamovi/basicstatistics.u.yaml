@@ -1,0 +1,72 @@
+title: Basic Statistics
+name: basicstatistics
+jus: '3.0'
+stage: 0
+compilerMode: tame
+children:
+  - type: VariableSupplier
+    persistentItems: false
+    stretchFactor: 1
+    children:
+      - type: TargetLayoutBox
+        label: Outcome/s
+        children:
+          - type: VariablesListBox
+            name: outcome
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Group by
+        children:
+          - type: VariablesListBox
+            name: group_by
+            maxItemCount: 1
+            isTarget: true
+  - type: Label
+    label: Summaries numerical
+    children:
+      - type: CheckBox
+        name: allco
+      - type: ComboBox
+        name: suco
+        enable: (!allco)
+  - type: Label
+    label: Summaries categorical
+    children:
+      - type: ComboBox
+        name: suca
+  - type: CustomControl
+    name: decimal_inputs
+  - type: CollapseBox
+    label: Options
+    collapsed: true
+    margin: large
+    children:
+      - type: Label
+        label: General
+        children:
+          - type: LayoutBox
+            margin: large
+            children:
+              - type: CheckBox
+                name: addp
+              - type: CheckBox
+                name: addt
+              - type: CheckBox
+                name: addn
+              - type: CheckBox
+                name: miss_yn
+      - type: Label
+        label: Size
+        children:
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: CustomControl
+                name: size_inputs
+  - type: CollapseBox
+    label: Labels and Titles
+    collapsed: true
+    margin: large
+    children:
+      - type: CustomControl
+        name: plotLabels

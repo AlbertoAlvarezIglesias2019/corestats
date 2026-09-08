@@ -1,0 +1,127 @@
+---
+name:  boxplot
+title: Boxplot
+menuGroup: corestats
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+
+    - name: y_axis
+      title: Y-axis (Response)
+      type: Variable
+      suggested: [ continuous ]
+      permitted: [ numeric ]
+
+    - name: x_axis
+      title: X-axis (Predictor)
+      type: Variable
+      suggested: [ ordinal, nominal ]
+      permitted: [ factor ]
+
+    - name: color_by
+      title: Color by
+      type: Variable
+      suggested: [ ordinal, nominal ]
+      permitted: [ factor ]
+
+    - name: panel_by
+      title: Panel by
+      type: Variable
+      suggested: [  ordinal, nominal ]
+      permitted: [ factor ]
+
+    - name: line_yn
+      title: ' '
+      type: Bool
+      default: false
+
+    - name: line_val
+      type: String
+
+    - name: y_axis_logyn
+      title: Log transform Y-axis
+      type: Bool
+      default: false
+
+    - name: y_inc
+      type: String
+
+    - name: miss_yn
+      title: Include Missing
+      type: Bool
+      default: false
+
+    - name: flip_yn
+      title: Flip axes
+      type: Bool
+      default: false
+
+    - name: addData_yn
+      title: Add data
+      type: Bool
+      default: false
+
+    - name: legend_pos
+      title: ''
+      type: List
+      options:
+        - title: None
+          name:  none
+        - title: Left
+          name:  left
+        - title: Top
+          name:  top
+        - title: Right
+          name:  right
+        - title: Bottom
+          name:  bottom
+      default: right
+
+
+    - name: font_size # <-- This is the name R will use
+      type: Number
+      default: 14
+      hidden: true
+
+    - name: point_size  # <-- NEW OPTION
+      type: Number
+      default: 2.5
+      hidden: true
+
+    - name: line_size  # <-- NEW OPTION
+      type: Number
+      default: 1.7
+      hidden: true
+
+    - name: main_title
+      type: String
+      hidden: true
+
+    - name: main_subtitle
+      type: String
+      hidden: true
+
+    - name: x_axis_text
+      type: String
+      hidden: true
+
+    - name: y_axis_text
+      type: String
+      hidden: true
+
+    - name: legend_title
+      type: String
+      hidden: true
+
+    - name: panelby_text
+      type: String
+      hidden: true
+
+    - name: miss_text
+      type: String
+      hidden: true
+
+...

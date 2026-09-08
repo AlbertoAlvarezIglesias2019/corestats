@@ -1,0 +1,15 @@
+---
+name:  tables
+title: Tables
+jrs:   '1.1'
+
+items:
+    - name: ghostplot
+      type: Image
+      width: 900
+      height: 1
+      renderFun: .ghostplot
+      
+    - name:  tablestyle
+      type:  Html
+...

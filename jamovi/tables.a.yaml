@@ -1,0 +1,91 @@
+---
+name:  tables
+title: Tables
+menuGroup: corestats
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+
+    - name: row
+      title: Rows
+      type: Variable
+      suggested: [ ordinal, nominal ]
+      permitted: [ factor ]
+      
+    - name: col
+      title: Columns
+      type: Variable
+      suggested: [ ordinal, nominal ]
+      permitted: [ factor ]
+      
+    - name: addp
+      title: Add P-value
+      type: Bool
+      default: false   
+
+    - name: miss_yn
+      title: Include Missing
+      type: Bool
+      default: false  
+      
+    - name: nd_cat
+      type: Integer
+      default: 1
+      hidden: true  
+      
+    - name: perc
+      type: List
+      title: Percentages
+      options:
+        - title: None
+          name:  none
+        - title: Column
+          name:  colu
+        - title: Row
+          name:  row
+        - title: Cell
+          name:  cell
+      default: none
+      
+    - name: marg
+      type: List
+      title: Marginals
+      options:
+        - title: None
+          name:  mnone
+        - title: Column
+          name:  mcolu
+        - title: Row
+          name:  mrow
+        - title: Column and Row
+          name:  mcolrow
+      default: mnone
+      
+    - name: miss_text
+      type: String
+      hidden: true
+      
+    - name: margin_text
+      type: String
+      hidden: true
+      
+    - name: rows_text
+      type: String
+      hidden: true
+
+    - name: cols_text
+      type: String
+      hidden: true
+      
+    - name: main_title
+      type: String
+      hidden: true
+      
+    - name: font_size # <-- This is the name R will use
+      type: Number
+      default: 14
+      hidden: true
+...

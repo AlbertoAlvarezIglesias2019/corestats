@@ -1,0 +1,56 @@
+---
+title: What the Package Does (Title Case)
+name: corestats
+version: 0.0.0
+jms: '1.0'
+authors:
+  - Who wrote it
+maintainer: The package maintainer <yourself@somewhere.net>
+date: '1970-01-01'
+type: R
+description: >-
+  More about what it does (maybe more than one line) Use four spaces when
+  indenting paragraphs within the Description.
+analyses:
+  - title: Scatterplot
+    name: scatterplot
+    ns: corestats
+    category: analyses
+    menuGroup: CoreStats
+    menuSubgroup: Graphs
+    menuTitle: Scatterplot
+  - title: Boxplot
+    name: boxplot
+    ns: corestats
+    category: analyses
+    menuGroup: corestats
+    menuSubgroup: Graphs
+    menuTitle: Boxplot
+  - title: Pie Chart
+    name: piechart
+    ns: corestats
+    category: analyses
+    menuGroup: corestats
+    menuTitle: Pie Chart
+  - title: Basic Statistics
+    name: basicstatistics
+    ns: corestats
+    category: analyses
+    menuGroup: corestats
+    menuTitle: Basic Statistics
+  - title: Tables
+    name: tables
+    ns: corestats
+    category: analyses
+    menuGroup: corestats
+    menuTitle: Tables
+  - title: One-Sample t
+    name: onemean
+    ns: corestats
+    category: analyses
+    menuGroup: corestats
+    menuTitle: One-Sample t
+usesNative: true
+minApp: 1.0.8
+
+...

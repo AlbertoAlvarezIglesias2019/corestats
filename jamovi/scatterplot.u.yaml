@@ -1,0 +1,135 @@
+title: Scatterplot..
+name: scatterplot
+jus: '3.0'
+stage: 0
+compilerMode: tame
+children:
+  - type: VariableSupplier
+    persistentItems: false
+    stretchFactor: 1
+    children:
+      - type: TargetLayoutBox
+        label: Y-axis (Response)
+        children:
+          - type: VariablesListBox
+            name: y_axis
+            maxItemCount: 1
+            isTarget: true
+      - type: TargetLayoutBox
+        label: X-axis (Predictor)
+        children:
+          - type: VariablesListBox
+            name: x_axis
+            maxItemCount: 1
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Color by
+        children:
+          - type: VariablesListBox
+            name: color_by
+            maxItemCount: 1
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Panel by
+        children:
+          - type: VariablesListBox
+            name: panel_by
+            maxItemCount: 1
+            isTarget: true
+
+
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: Label
+        label: General
+        children:
+          - type: ComboBox
+            name: legend_pos
+          - type: CheckBox
+            name: miss_yn
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: Label
+                label: 'Log transform:'
+              - type: CheckBox
+                name: x_axis_logyn      # Make sure this matches your exact variable name in .a.yaml
+                label: X-axis
+              - type: CheckBox
+                name: y_axis_logyn      # Make sure this matches your exact variable name in .a.yaml
+                label: Y-axis
+          - type: CheckBox
+            name: flip_yn
+          - type: CheckBox
+            name: same_scale_yn
+          - type: CheckBox
+            name: line_eq_yn
+      - type: Label
+        label: Best fit
+        children:
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: Label
+                label: Fit method
+              - type: RadioButton
+                name: best_fit_type_non
+                optionName: best_fit_type
+                optionPart: non
+              - type: RadioButton
+                name: best_fit_type_reg
+                optionName: best_fit_type
+                optionPart: reg
+              - type: RadioButton
+                name: best_fit_type_smo
+                optionName: best_fit_type
+                optionPart: smo
+          - type: CheckBox
+            name: best_fit_label
+            enable: (best_fit_type_reg || best_fit_type_smo)
+          - type: CheckBox
+            name: best_fit_int_yn
+            enable: (best_fit_type_reg || best_fit_type_smo)
+          - type: CustomControl
+            name: smooth_container
+
+  - type: CollapseBox
+    label: Appearance
+    collapsed: true
+    margin: large
+    children:
+      - type: Label
+        label: Axis
+        children:
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: Label
+                label: 'Axis increments:'
+              - type: TextBox
+                name: x_inc
+                label: X-axis
+                format: string
+              - type: TextBox
+                name: y_inc
+                label: Y-axis
+                format: string
+      - type: Label
+        label: Element Sizes
+        children:
+          - type: LayoutBox
+            style: inline
+            children:
+            - type: CustomControl
+              name: size_inputs
+
+
+
+  - type: CollapseBox
+    label: Plot Labels & Text
+    collapsed: true
+    margin: large
+    children:
+      - type: CustomControl
+        name: plotLabels

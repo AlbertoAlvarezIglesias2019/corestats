@@ -1,0 +1,62 @@
+---
+name:  onemean
+title: One-Sample t
+jrs:   '1.1'
+
+items:
+
+    - name: ghostplot
+      type: Image
+      width: 900
+      height: 1
+      renderFun: .ghostplot
+
+    - name: nomality_plot
+      title: Normality Assessment
+      type: Image
+      width: 900
+      height: 600
+      renderFun: .nomality_plot
+      visible: (norma_assess_yn)
+
+    - name:  tablestyle_ttest
+      type:  Html
+      visible: (variable)
+
+
+    - name:  tablestyle_tolerance
+      type:  Html
+      visible: (tolerance_yn)
+      
+    - name: tolerance_plot
+      title: Tolerance Interval Plot
+      type: Image
+      width: 700
+      height: 500
+      renderFun: .tolerance_plot
+      visible: (tolerance_yn && tolerance_controlcharts_yn)
+      
+    - name:  tablestyle_boot
+      type:  Html
+      clearWith:
+          - variable
+      visible: (boot_yn)
+  
+     
+    - name: boot_plot_interval
+      title: Bootstrap Intervals
+      type: Image
+      width: 500
+      height: 300
+      renderFun: .boot_plot_interval
+      visible: (boot_yn && boot_intervalplot_yn) 
+      
+    - name: boot_plot_null
+      title: Bootstrap Null Distribution
+      type: Image
+      width: 500
+      height: 300
+      renderFun: .boot_plot_null
+      visible: (boot_yn && testyn_boot && boot_nullplot_yn)
+
+...

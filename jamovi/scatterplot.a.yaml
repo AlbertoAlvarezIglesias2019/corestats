@@ -1,0 +1,159 @@
+---
+name:  scatterplot
+title: Scatterplot
+menuGroup: CoreStats
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+
+    - name: y_axis
+      title: Y-axis (Response)
+      type: Variable
+      suggested: [ continuous ]
+      permitted: [ numeric ]
+
+    - name: x_axis
+      title: X-axis (Predictor)
+      type: Variable
+      suggested: [ continuous ]
+      permitted: [ numeric ]
+
+    - name: color_by
+      title: Color by
+      type: Variable
+      suggested: [ continuous, ordinal, nominal ]
+      permitted: [ numeric,factor ]
+
+    - name: panel_by
+      title: Panel by
+      type: Variable
+      suggested: [  ordinal, nominal ]
+      permitted: [ factor ]
+
+    - name: same_scale_yn
+      title: Same X-Y axis
+      type: Bool
+      default: false
+
+    - name: line_eq_yn
+      title: Line of equality
+      type: Bool
+      default: false
+
+    - name: best_fit_type
+      title: Method
+      type: List
+      options:
+        - title: None
+          name:  non
+        - title: Regression
+          name:  reg
+        - title: Smoother
+          name:  smo
+      default: non
+
+    - name: best_fit_label
+      title: Named lines
+      type: Bool
+      default: true
+
+    - name: best_fit_int_yn
+      title: Confidence intervals
+      type: Bool
+      default: false
+
+    - name: x_axis_logyn
+      title: Log transform X-axis
+      type: Bool
+      default: false
+
+    - name: y_axis_logyn
+      title: Log transform Y-axis
+      type: Bool
+      default: false
+
+    - name: x_inc
+      type: String
+
+    - name: y_inc
+      type: String
+
+    - name: miss_yn
+      title: Include Missing
+      type: Bool
+      default: false
+
+    - name: flip_yn
+      title: Flip axes
+      type: Bool
+      default: false
+
+    - name: legend_pos
+      title: Legend position
+      type: List
+      options:
+        - title: None
+          name:  none
+        - title: Left
+          name:  left
+        - title: Top
+          name:  top
+        - title: Right
+          name:  right
+        - title: Bottom
+          name:  bottom
+      default: right
+
+
+    - name: font_size # <-- This is the name R will use
+      type: Number
+      default: 14
+      hidden: true
+
+    - name: point_size  # <-- NEW OPTION
+      type: Number
+      default: 2.5
+      hidden: true
+
+    - name: line_size  # <-- NEW OPTION
+      type: Number
+      default: 1
+      hidden: true
+
+    - name: main_title
+      type: String
+      hidden: true
+
+    - name: main_subtitle
+      type: String
+      hidden: true
+
+    - name: x_axis_text
+      type: String
+      hidden: true
+
+    - name: y_axis_text
+      type: String
+      hidden: true
+
+    - name: legend_title
+      type: String
+      hidden: true
+
+    - name: panelby_text
+      type: String
+      hidden: true
+
+    - name: miss_text
+      type: String
+      hidden: true
+
+    - name: smooth_span
+      title: Smoother Span
+      type: Number
+      default: 0.75
+      hidden: true
+...

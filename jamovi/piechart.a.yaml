@@ -1,0 +1,140 @@
+---
+name:  piechart
+title: Pie Chart
+menuGroup: corestats
+version: '1.0.0'
+jas: '1.2'
+
+options:
+
+    - name: input_mode
+      type: List
+      options:
+        - use_variables
+        - use_matrix
+      default: use_variables
+
+    - name: data
+      type: Data
+
+    - name: y_axis
+      title: Outcome
+      type: Variable
+      suggested: [ ordinal, nominal ]
+      permitted: [ factor ]
+
+    - name: panel_by
+      title: Panel by
+      type: Variable
+      suggested: [  ordinal, nominal ]
+      permitted: [ factor ]
+
+    - name: miss_yn
+      title: Include Missing
+      type: Bool
+      default: false
+
+    - name: legend_pos
+      title: ''
+      type: List
+      options:
+        - title: None
+          name:  none
+        - title: Left
+          name:  left
+        - title: Top
+          name:  top
+        - title: Right
+          name:  right
+        - title: Bottom
+          name:  bottom
+      default: right
+
+
+    - name: summ_type
+      title: Summary type
+      type: List
+      options:
+        - title: None
+          name:  n
+        - title: Counts
+          name:  c
+        - title: Percentages
+          name:  p
+        - title: Percentages (Counts)
+          name:  pc
+      default: n
+
+    - name: n_row
+      title: Number of Rows
+      type: Integer
+      default: 4
+      min: 1
+      max: 10
+      hidden: true
+
+    - name: n_col
+      title: Number of Columns
+      type: Integer
+      default: 2
+      min: 1
+      max: 10
+      hidden: true
+
+    - name: table_json
+      title: Table Data Storage
+      type: String
+      default: ""
+      hidden: true
+
+    - name: font_size
+      title: Font Size
+      type: Integer
+      default: 20
+      min: 8
+      max: 30
+      hidden: true
+
+    - name: point_size
+      title: Point Size
+      type: Integer
+      default: 9
+      min: 2
+      max: 15
+      hidden: true
+
+    - name: nd_num
+      type: Integer
+      default: 1
+      hidden: true
+
+    - name: main_title
+      title: Main Title
+      type: String
+      default: ""
+      hidden: true
+
+    - name: main_subtitle
+      title: Subtitle
+      type: String
+      default: ""
+      hidden: true
+
+    - name: outcome_text
+      type: String
+      hidden: true
+
+    - name: panelby_text
+      title: Panel Prefix Text
+      type: String
+      default: ""
+      hidden: true
+
+    - name: miss_text
+      title: Missing Values Label
+      type: String
+      default: "(Unknown)"
+      hidden: true
+
+
+...
