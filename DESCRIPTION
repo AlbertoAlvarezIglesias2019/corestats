@@ -1,0 +1,16 @@
+Package: corestats
+Type: Package
+Title: Core Stats for Introductory Statistics Courses
+Version: 0.0.0
+Author: Alberto Alvarez-Iglesias
+Maintainer: Alberto Alvarez-Iglesias <alberto.alvarez-iglesias@universityofgalway.ie>
+Description: This module provides essential, easy-to-use statistical and graphical
+  analyses commonly used in introductory biostatistics and public health
+  courses. Tools include functions for data exploration, such as
+  customizable bar charts, summary tables, and other core descriptive and
+  inferential statistics.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports: 
+  jmvcore (>= 0.8.5), R6, ggplot2, scales, data.table, kableExtra
