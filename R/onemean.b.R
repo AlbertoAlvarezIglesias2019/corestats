@@ -11,7 +11,10 @@ onemeanClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # `self$options` contains the options
             # `self$results` contains the results object (to populate)
 
-          if (!self$options$input_mode == "use_matrix" && is.null(self$options$variable) ) return(FALSE)
+          if (!self$options$input_mode == "use_matrix" && is.null(self$options$variable) ) {
+            self$results$tablestyle_ttest$setVisible(FALSE)
+            return(FALSE)
+          }
           
           if (is.null(self$options$variable) | self$options$input_mode == "use_matrix" ) {
             self$results$tablestyle_tolerance$setVisible(FALSE)
