@@ -7,6 +7,7 @@ options(jamovi_home="C:\\Program Files\\jamovi 2.7.38.0")
 #jmvtools::addAnalysis(name='basicstatistics', title='Basic Statistics')
 #jmvtools::addAnalysis(name='tables', title='Tables')
 #jmvtools::addAnalysis(name='onemean', title='One-Sample t')
+#jmvtools::addAnalysis(name='paired', title='Paired t..')
 
 
 jmvtools::install()
