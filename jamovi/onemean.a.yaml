@@ -37,7 +37,7 @@ options:
 
     - name: font_size # <-- This is the name R will use
       type: Number
-      default: 14
+      default: 20
       hidden: true
 
       
