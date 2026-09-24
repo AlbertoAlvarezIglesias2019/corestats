@@ -66,7 +66,8 @@
 #' 
 #' 
 
-rcs_paired_boot <- function(var1, var2, conf_boot, alt_boot, nd_num, font_size = 16, testyn_boot = FALSE) {
+rcs_paired_boot <- function(var1, var2, conf_boot, alt_boot, nd_num, font_size = 16,
+                            testyn_boot = FALSE,boot_nullplot_yn=FALSE, boot_intervalplot_yn=FALSE) {
   
   # =========================================================================
   # 1. DATA PREPARATION AND BOOTSTRAP RESAMPLING
@@ -131,38 +132,44 @@ rcs_paired_boot <- function(var1, var2, conf_boot, alt_boot, nd_num, font_size =
   # 3. GGPLOT VISUALIZATIONS
   # =========================================================================
   # Null Distribution Plot
-  plot_null <- ggplot2::ggplot(null_dist, ggplot2::aes(x = stat)) +
-    ggplot2::geom_histogram(bins = 30, fill = "gray80", color = "white") +
-    ggplot2::geom_vline(xintercept = x_tilde, color = "red", linewidth = 1, linetype = "dashed") +
-    ggplot2::labs(title = "Null Distribution", x = "Statistic", y = "Count") +
-    ggplot2::theme_minimal()
+  if (boot_nullplot_yn) {
+    plot_null <- ggplot2::ggplot(null_dist, ggplot2::aes(x = stat)) +
+      ggplot2::geom_histogram(bins = 30, fill = "gray80", color = "white") +
+      ggplot2::geom_vline(xintercept = x_tilde, color = "red", linewidth = 1, linetype = "dashed") +
+      ggplot2::labs(title = "Null Distribution", x = "Statistic", y = "Count") +
+      ggplot2::theme_minimal()
+  } else plot_null<-NULL
+
   
   # Bootstrap Confidence Interval Plot
-  plot_interval <- ggplot2::ggplot(boot_dist, ggplot2::aes(x = stat)) +
-    ggplot2::geom_histogram(bins = 15, fill = "gray30", color = "white") +
-    ggplot2::annotate(
-      "rect", 
-      xmin = percentile_ci[1], 
-      xmax = percentile_ci[2], 
-      ymin = 0, 
-      ymax = Inf, 
-      fill = "#56D6B5", 
-      alpha = 0.5
-    ) +
-    ggplot2::labs(
-      title = "Simulation-Based Bootstrap Distribution",
-      x = "stat",
-      y = "count"
-    ) +
-    ggplot2::theme_minimal()
-  
-  # Add vertical boundary lines for finite interval limits
-  if (is.finite(percentile_ci[1])) {
-    plot_interval <- plot_interval + ggplot2::geom_vline(xintercept = percentile_ci[1], color = "#2ECC71", linewidth = 1)
-  }
-  if (is.finite(percentile_ci[2])) {
-    plot_interval <- plot_interval + ggplot2::geom_vline(xintercept = percentile_ci[2], color = "#2ECC71", linewidth = 1)
-  }
+  if (boot_intervalplot_yn) {
+    plot_interval <- ggplot2::ggplot(boot_dist, ggplot2::aes(x = stat)) +
+      ggplot2::geom_histogram(bins = 15, fill = "gray30", color = "white") +
+      ggplot2::annotate(
+        "rect", 
+        xmin = percentile_ci[1], 
+        xmax = percentile_ci[2], 
+        ymin = 0, 
+        ymax = Inf, 
+        fill = "#56D6B5", 
+        alpha = 0.5
+      ) +
+      ggplot2::labs(
+        title = "Simulation-Based Bootstrap Distribution",
+        x = "stat",
+        y = "count"
+      ) +
+      ggplot2::theme_minimal()
+    
+    # Add vertical boundary lines for finite interval limits
+    if (is.finite(percentile_ci[1])) {
+      plot_interval <- plot_interval + ggplot2::geom_vline(xintercept = percentile_ci[1], color = "#2ECC71", linewidth = 1)
+    }
+    if (is.finite(percentile_ci[2])) {
+      plot_interval <- plot_interval + ggplot2::geom_vline(xintercept = percentile_ci[2], color = "#2ECC71", linewidth = 1)
+    }
+  } else plot_interval<-NULL
+
   
   # =========================================================================
   # 4. BUILD TABLE DATA AND HTML STRINGS
