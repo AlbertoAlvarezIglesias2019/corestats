@@ -72,11 +72,11 @@ rcs_paired_ttest <- function(var1,var2, conf_ttest, nh_ttest, alt_ttest, nd_num,
   fit <- stats::t.test(var1,var2,paired=TRUE, mu = nh_ttest, conf.level = conf_ttest, alternative = alt_ttest)
   
   # Calculate and format descriptive statistics.
-  esti <- ndformat(fit$estimate,nd) 
-  se <- ndformat(fit$stderr, nd + 1)
+  esti <- ndformat(fit$estimate,nd_num) 
+  se <- ndformat(fit$stderr, nd_num + 1)
   
   # Calculate and format the confidence interval.
-  out <- ndformat(fit$conf.int,nd) 
+  out <- ndformat(fit$conf.int,nd_num) 
   #out <- round(fit$conf.int, nd)
   out <- paste(out, collapse = ", ")
   ci <- paste("(", out, ")", sep = "")
