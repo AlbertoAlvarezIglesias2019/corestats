@@ -31,25 +31,35 @@ analyses:
     ns: corestats
     category: analyses
     menuGroup: corestats
+    menuSubgroup: Graphs
     menuTitle: Pie Chart
   - title: Basic Statistics
     name: basicstatistics
     ns: corestats
     category: analyses
     menuGroup: corestats
+    menuSubgroup: Summaries
     menuTitle: Basic Statistics
   - title: Tables
     name: tables
     ns: corestats
     category: analyses
     menuGroup: corestats
+    menuSubgroup: Summaries
     menuTitle: Tables
   - title: One-Sample t
     name: onemean
     ns: corestats
     category: analyses
     menuGroup: corestats
+    menuSubgroup: Analysis
     menuTitle: One-Sample t
+  - title: Paired t..
+    name: paired
+    ns: corestats
+    category: analyses
+    menuGroup: corestats
+    menuTitle: Paired t..
 usesNative: true
 minApp: 1.0.8
 
