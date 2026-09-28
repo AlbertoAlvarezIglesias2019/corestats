@@ -37,6 +37,15 @@ module.exports = {
                 ui.summary_input_container.$el.hide();
             }
         }
+        
+        // Toggle Summary input container (two groups)
+        if (ui.summary_2g_input_container && ui.summary_2g_input_container.$el) {
+            if (isMatrix) {
+                ui.summary_2g_input_container.$el.show();
+            } else {
+                ui.summary_2g_input_container.$el.hide();
+            }
+        }
     },
 
     // =========================================================================
@@ -496,6 +505,135 @@ module.exports = {
     },
     
     // =========================================================================
+    // 4c. MANUAL SUMMARY DATA INPUT (Two Groups: N, Mean, SD)
+    // =========================================================================
+    summary_2g_input_container_creating: function(ui, event) {
+        module.exports.renderSummary2GInput(ui);
+    },
+
+    renderSummary2GInput: function(ui) {
+        if (!ui.summary_2g_input_container) return;
+        let $container = ui.summary_2g_input_container.$el;
+
+        let n1Val = (ui.summ1_n && ui.summ1_n.value() !== null) ? ui.summ1_n.value() : 100;
+        let mean1Val = (ui.summ1_mean && ui.summ1_mean.value() !== null) ? ui.summ1_mean.value() : 50;
+        let sd1Val = (ui.summ1_sd && ui.summ1_sd.value() !== null) ? ui.summ1_sd.value() : 20;
+
+        let n2Val = (ui.summ2_n && ui.summ2_n.value() !== null) ? ui.summ2_n.value() : 100;
+        let mean2Val = (ui.summ2_mean && ui.summ2_mean.value() !== null) ? ui.summ2_mean.value() : 50;
+        let sd2Val = (ui.summ2_sd && ui.summ2_sd.value() !== null) ? ui.summ2_sd.value() : 20;
+
+        let htmlContent = `
+            <style>
+                .sum2g-panel { 
+                    font-family: sans-serif; 
+                    background: #f8fafc; 
+                    border: 1px solid #cbd5e1; 
+                    border-radius: 6px; 
+                    padding: 10px 12px; 
+                    margin-top: 10px; 
+                    width: fit-content; 
+                    max-width: 320px; 
+                    box-sizing: border-box; 
+                }
+                .sum2g-title { 
+                    font-size: 12px; 
+                    font-weight: bold; 
+                    color: #1e293b; 
+                    margin-bottom: 10px; 
+                    white-space: nowrap; 
+                    text-align: center;
+                }
+                .sum2g-header {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 4px;
+                    padding: 0 8px;
+                }
+                .sum2g-header-empty {
+                    width: 38px;
+                    flex-shrink: 0;
+                    margin-right: 8px;
+                }
+                .sum2g-header-label {
+                    font-size: 11px;
+                    font-weight: bold;
+                    color: #475569;
+                    width: 65px;
+                    text-align: center;
+                    margin-right: 8px;
+                }
+                .sum2g-header-label:last-child { margin-right: 0; }
+                .sum2g-row { 
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: flex-start; 
+                    background: white; 
+                    padding: 4px 8px; 
+                    border: 1px solid #e2e8f0; 
+                    border-radius: 4px; 
+                    gap: 8px; 
+                    box-sizing: border-box; 
+                    margin-bottom: 5px; 
+                }
+                .sum2g-row:last-child { margin-bottom: 0; }
+                .sum2g-label { 
+                    font-size: 11px; 
+                    font-weight: bold; 
+                    color: #475569; 
+                    width: 38px; 
+                    text-align: right; 
+                    flex-shrink: 0; 
+                }
+                .sum2g-input { 
+                    width: 65px; 
+                    flex-grow: 0; 
+                    padding: 3px 6px; 
+                    border: 1px solid #cbd5e1; 
+                    border-radius: 4px; 
+                    font-size: 12px; 
+                    outline: none; 
+                    text-align: center; 
+                }
+            </style>
+            <div class="sum2g-panel">
+                <div class="sum2g-title">Summary Statistics Input</div>
+                <div class="sum2g-header">
+                    <div class="sum2g-header-empty"></div>
+                    <div class="sum2g-header-label">Group 1</div>
+                    <div class="sum2g-header-label">Group 2</div>
+                </div>
+                <div class="sum2g-row">
+                    <span class="sum2g-label">N</span>
+                    <input type="number" id="jmv-summ1-n" class="sum2g-input" min="1" step="1" value="${n1Val}">
+                    <input type="number" id="jmv-summ2-n" class="sum2g-input" min="1" step="1" value="${n2Val}">
+                </div>
+                <div class="sum2g-row">
+                    <span class="sum2g-label">Mean</span>
+                    <input type="number" id="jmv-summ1-mean" class="sum2g-input" step="any" value="${mean1Val}">
+                    <input type="number" id="jmv-summ2-mean" class="sum2g-input" step="any" value="${mean2Val}">
+                </div>
+                <div class="sum2g-row">
+                    <span class="sum2g-label">SD</span>
+                    <input type="number" id="jmv-summ1-sd" class="sum2g-input" min="0" step="any" value="${sd1Val}">
+                    <input type="number" id="jmv-summ2-sd" class="sum2g-input" min="0" step="any" value="${sd2Val}">
+                </div>
+            </div>
+        `;
+
+        $container.html(htmlContent);
+
+        // Bind events
+        $container.find('#jmv-summ1-n').on('input', function() { if (ui.summ1_n) ui.summ1_n.setValue(parseInt(this.value) || 0); });
+        $container.find('#jmv-summ1-mean').on('input', function() { if (ui.summ1_mean) ui.summ1_mean.setValue(parseFloat(this.value) || 0); });
+        $container.find('#jmv-summ1-sd').on('input', function() { if (ui.summ1_sd) ui.summ1_sd.setValue(parseFloat(this.value) || 0); });
+
+        $container.find('#jmv-summ2-n').on('input', function() { if (ui.summ2_n) ui.summ2_n.setValue(parseInt(this.value) || 0); });
+        $container.find('#jmv-summ2-mean').on('input', function() { if (ui.summ2_mean) ui.summ2_mean.setValue(parseFloat(this.value) || 0); });
+        $container.find('#jmv-summ2-sd').on('input', function() { if (ui.summ2_sd) ui.summ2_sd.setValue(parseFloat(this.value) || 0); });
+    },
+    
+    // =========================================================================
     // 5. LIFECYCLE MEMORY SYNC & RESTORE
     // =========================================================================
     view_loaded: function(ui, event) {
@@ -508,5 +646,6 @@ module.exports = {
         if (ui.plotLabels && ui.plotLabels.$el) module.exports.renderLabelsPanel(ui);
         if (ui.table_input_container && ui.table_input_container.$el) module.exports.renderMatrixGrid(ui);
         if (ui.summary_input_container && ui.summary_input_container.$el) module.exports.renderSummaryInput(ui);
+        if (ui.summary_2g_input_container && ui.summary_2g_input_container.$el) module.exports.renderSummary2GInput(ui);
     }
 };
