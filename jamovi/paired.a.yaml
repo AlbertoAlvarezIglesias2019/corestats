@@ -1,0 +1,123 @@
+---
+name:  paired
+title: Paired t..
+menuGroup: corestats
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+
+    - name: var1
+      title: Variable 1
+      type: Variable
+      suggested:
+        - continuous
+      permitted:
+        - numeric
+    
+    - name: var2
+      title: Variable 2
+      type: Variable
+      suggested:
+        - continuous
+      permitted:
+        - numeric
+
+
+    - name: nd_num
+      type: Integer
+      default: 1
+      hidden: true    
+      
+    - name: miss_yn
+      title: Include Missing
+      type: Bool
+      default: false  
+      
+
+    - name: font_size # <-- This is the name R will use
+      type: Number
+      default: 20
+      hidden: true
+
+
+    - name: testyn_ttest
+      title: Perform hypothesis test
+      type: Bool
+      default: false 
+      
+    - name: conf_ttest
+      title: Confidence level
+      type: Number
+      min: 0
+      max: 100
+      default: 95  
+      
+    - name: nh_ttest
+      title: hypothesised mean
+      type: Number
+      default: 0  
+      
+    - name: alt_ttest
+      title: Alternative hypothesis
+      type: List
+      options:
+        - title: Greater
+          name:  greater
+        - title: Less
+          name:  less
+        - title: Two-sided
+          name:  two.sided
+      default: two.sided
+      
+      
+    - name: plotdata_yn
+      title: Visualise data
+      type: Bool
+      default: false       
+      
+     
+    - name: boot_yn
+      title: Calculate interval
+      type: Bool
+      default: false 
+      
+    - name: conf_boot
+      title: Confidence level
+      type: Number
+      min: 0
+      max: 100
+      default: 95  
+      
+    - name: testyn_boot
+      title: Perform hypothesis test
+      type: Bool
+      default: false 
+      
+      
+    - name: alt_boot
+      title: Alternative hypothesis
+      type: List
+      options:
+        - title: Greater
+          name:  greater
+        - title: Less
+          name:  less
+        - title: Two-sided
+          name:  two-sided
+      default: two-sided
+
+      
+    - name: boot_nullplot_yn
+      title: Plot Null Distribution
+      type: Bool
+      default: false 
+      
+      
+    - name: boot_intervalplot_yn
+      title: Visualise intervals
+      type: Bool
+      default: false
+...
