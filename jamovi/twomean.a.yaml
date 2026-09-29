@@ -1,0 +1,178 @@
+---
+name:  twomean
+title: Two-Sample t
+menuGroup: Core Stat
+version: '1.0.0'
+jas: '1.2'
+
+options:
+
+    - name: input_mode
+      type: List
+      options:
+        - use_variables
+        - use_matrix
+      default: use_variables
+      
+      
+    - name: data
+      type: Data
+
+    - name: variable
+      title: Outcome
+      type: Variable
+      suggested: [ continuous ]
+      permitted: [ numeric ]
+
+    - name: by
+      title: Grouping variable
+      type: Variable
+      suggested: [ ordinal, nominal ]
+      permitted: [ factor ]
+      
+    - name: refl
+      title: Level of interest
+      type: Level
+      variable: (by)
+      
+    - name: ev
+      title: Assumed equal variances
+      type: Bool
+      default: false 
+      
+    - name: nd_num
+      type: Integer
+      default: 1
+      hidden: true   
+      
+    - name: miss_yn
+      title: Include Missing
+      type: Bool
+      default: false  
+      
+
+    - name: font_size # <-- This is the name R will use
+      type: Number
+      default: 20
+      hidden: true
+
+      
+    - name: testyn_ttest
+      title: Perform hypothesis test
+      type: Bool
+      default: false 
+      
+    - name: conf_ttest
+      title: Confidence level
+      type: Number
+      min: 0
+      max: 100
+      default: 95  
+      
+    - name: nh_ttest
+      title: hypothesised mean
+      type: Number
+      default: 0  
+      
+    - name: alt_ttest
+      title: Alternative hypothesis
+      type: List
+      options:
+        - title: Greater
+          name:  greater
+        - title: Less
+          name:  less
+        - title: Two-sided
+          name:  two.sided
+      default: two.sided
+      
+
+    - name: summ1_n
+      title: N
+      type: Number
+      default: 100  
+      hidden: true
+      
+    - name: summ1_mean
+      title: Mean
+      type: Number
+      default: 50  
+      hidden: true
+
+    - name: summ1_sd
+      title: SD
+      type: Number
+      default: 20  
+      hidden: true
+      
+    - name: summ2_n
+      title: N
+      type: Number
+      default: 100  
+      hidden: true
+      
+    - name: summ2_mean
+      title: Mean
+      type: Number
+      default: 60  
+      hidden: true
+
+    - name: summ2_sd
+      title: SD
+      type: Number
+      default: 20  
+      hidden: true
+      
+    - name: norma_assess_yn
+      title: Normality Assessment
+      type: Bool
+      default: false 
+ 
+      
+    - name: boot_yn
+      title: Calculate interval
+      type: Bool
+      default: false 
+      
+    - name: conf_boot
+      title: Confidence level
+      type: Number
+      min: 0
+      max: 100
+      default: 95  
+      
+    - name: testyn_boot
+      title: Perform hypothesis test
+      type: Bool
+      default: false 
+      
+    - name: nh_boot
+      title: hypothesised proportion
+      type: Number
+      default: 0  
+      
+    - name: alt_boot
+      title: Alternative hypothesis
+      type: List
+      options:
+        - title: Greater
+          name:  greater
+        - title: Less
+          name:  less
+        - title: Two-sided
+          name:  two-sided
+      default: two-sided
+
+      
+    - name: boot_nullplot_yn
+      title: Plot Null Distribution
+      type: Bool
+      default: false 
+      
+      
+    - name: boot_intervalplot_yn
+      title: Visualise intervals
+      type: Bool
+      default: false
+      
+...
