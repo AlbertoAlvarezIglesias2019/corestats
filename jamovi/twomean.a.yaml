@@ -175,4 +175,9 @@ options:
       type: Bool
       default: false
       
+    - name: miss_text
+      title: Missing Values Label
+      type: String
+      default: "Mis"
+      hidden: true
 ...
