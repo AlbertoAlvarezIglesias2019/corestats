@@ -1,7 +1,7 @@
 ---
 name:  basicstatistics
 title: Basic Statistics
-menuGroup: corestats
+menuGroup: Core Stat
 version: '1.0.0'
 jas: '1.2'
 

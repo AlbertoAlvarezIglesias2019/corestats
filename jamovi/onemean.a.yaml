@@ -1,7 +1,7 @@
 ---
 name:  onemean
 title: One-Sample t
-menuGroup: corestats
+menuGroup: Core Stat
 version: '1.0.0'
 jas: '1.2'
 

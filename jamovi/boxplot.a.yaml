@@ -1,7 +1,7 @@
 ---
 name:  boxplot
 title: Boxplot
-menuGroup: corestats
+menuGroup: Core Graph
 version: '1.0.0'
 jas: '1.2'
 
