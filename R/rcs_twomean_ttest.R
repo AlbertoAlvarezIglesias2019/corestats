@@ -72,7 +72,9 @@
 #'   testyn_ttest = TRUE
 #' )
 
-rcs_twomean_ttest <- function(data, variable, by, conf_ttest, alt_ttest, ev = TRUE, nh_ttest = 0, nd_num, font_size, miss_yn = FALSE, testyn_ttest = FALSE) {
+rcs_twomean_ttest <- function(data, variable, by, conf_ttest, alt_ttest, ev = TRUE, nh_ttest = 0,
+                              nd_num, font_size, miss_yn = FALSE, testyn_ttest = FALSE,
+                              miss_text = "Mis") {
   
   # Convert to data.table if not already
   dt <- data.table::as.data.table(data)
@@ -132,7 +134,7 @@ rcs_twomean_ttest <- function(data, variable, by, conf_ttest, alt_ttest, ev = TR
   )
   
   # Define the table column headers with HTML formatting.
-  col_headers_html <- c("Variable", "N", "Mis", "Mean (SD)", "N", "Mis", "Mean (SD)")
+  col_headers_html <- c("Variable", "N", miss_text, "Mean (SD)", "N", miss_text, "Mean (SD)")
   header_vector <- stats::setNames(c(1, 3, 3), c(" ", levs[1], levs[2]))
   
   # Conditionally remove columns for missing values.
