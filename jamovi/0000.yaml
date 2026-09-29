@@ -16,50 +16,58 @@ analyses:
     name: scatterplot
     ns: corestats
     category: analyses
-    menuGroup: corestats
+    menuGroup: Core Graph
     menuSubgroup: Graphs
     menuTitle: Scatterplot
   - title: Boxplot
     name: boxplot
     ns: corestats
     category: analyses
-    menuGroup: corestats
+    menuGroup: Core Graph
     menuSubgroup: Graphs
     menuTitle: Boxplot
   - title: Pie Chart
     name: piechart
     ns: corestats
     category: analyses
-    menuGroup: corestats
+    menuGroup: Core Graph
     menuSubgroup: Graphs
     menuTitle: Pie Chart
   - title: Basic Statistics
     name: basicstatistics
     ns: corestats
     category: analyses
-    menuGroup: corestats
+    menuGroup: Core Stat
     menuSubgroup: Summaries
     menuTitle: Basic Statistics
   - title: Tables
     name: tables
     ns: corestats
     category: analyses
-    menuGroup: corestats
+    menuGroup: Core Stat
     menuSubgroup: Summaries
     menuTitle: Tables
   - title: One-Sample t
     name: onemean
     ns: corestats
     category: analyses
-    menuGroup: corestats
+    menuGroup: Core Stat
     menuSubgroup: Analysis
     menuTitle: One-Sample t
   - title: Paired t..
     name: paired
     ns: corestats
     category: analyses
-    menuGroup: corestats
+    menuGroup: Core Stat
+    menuSubgroup: Analysis
     menuTitle: Paired t..
+  - title: Two-Sample t
+    name: twomean
+    ns: corestats
+    category: analyses
+    menuGroup: Core Stat
+    menuSubgroup: Analysis
+    menuTitle: Two-Sample t
 usesNative: true
 minApp: 1.0.8
 
