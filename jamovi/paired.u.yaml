@@ -19,7 +19,7 @@ children:
             name: var1
             isTarget: true
             maxItemCount: 1
-  
+
       - type: TargetLayoutBox
         label: Variable 2
         children:
@@ -27,22 +27,28 @@ children:
             name: var2
             isTarget: true
             maxItemCount: 1
-                  
 
   - type: LayoutBox
     margin: large
     children:
       - type: CheckBox
         name: plotdata_yn
+
+  # Confidence Interval (Stacked vertically, control inline)
   - type: Label
     label: Confidence Interval
     children:
       - type: LayoutBox
         margin: large
+        style: inline
         children:
           - type: TextBox
             name: conf_ttest
             format: number
+  - type: CustomControl
+    name: decimal_inputs
+
+  # Hypothesis Test (Stacked vertically, controls wrapped cleanly)
   - type: Label
     label: Hypothesis Test
     children:
@@ -51,43 +57,53 @@ children:
         children:
           - type: CheckBox
             name: testyn_ttest
-          - type: TextBox
-            name: nh_ttest
-            format: number
-            enable: (testyn_ttest)
-          - type: ComboBox
-            name: alt_ttest
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: TextBox
+                name: nh_ttest
+                format: number
+                enable: (testyn_ttest)
+              - type: ComboBox
+                name: alt_ttest
+                enable: (testyn_ttest)
+
   - type: CollapseBox
     label: Options
     collapsed: true
     margin: large
     children:
       - type: Label
-        label: General
+        label: Missing Values
         children:
           - type: LayoutBox
             margin: large
             children:
               - type: CheckBox
                 name: miss_yn
-      - type: CustomControl
-        name: decimal_inputs
+
       - type: Label
-        label: Size
+        label: Display
         children:
           - type: LayoutBox
-            style: inline
+            margin: large
             children:
               - type: CustomControl
                 name: size_inputs
+
+
 
   - type: CollapseBox
     label: Bootstrap
     collapsed: true
     margin: large
     children:
-      - type: CheckBox
-        name: boot_yn
+      - type: LayoutBox
+        margin: large
+        children:
+          - type: CheckBox
+            name: boot_yn
+
       - type: Label
         label: Bootstrap Interval
         children:
@@ -101,6 +117,7 @@ children:
               - type: CheckBox
                 name: boot_intervalplot_yn
                 enable: (boot_yn)
+
       - type: Label
         label: Bootstrap Hypothesis Test
         children:
@@ -110,10 +127,12 @@ children:
               - type: CheckBox
                 name: testyn_boot
                 enable: (boot_yn)
-              - type: ComboBox
-                name: alt_boot
-                enable: (testyn_boot && boot_yn)
+              - type: LayoutBox
+                style: inline
+                children:
+                  - type: ComboBox
+                    name: alt_boot
+                    enable: (testyn_boot && boot_yn)
               - type: CheckBox
                 name: boot_nullplot_yn
                 enable: (boot_yn && testyn_boot)
-                
