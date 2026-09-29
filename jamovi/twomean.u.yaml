@@ -110,6 +110,8 @@ children:
             children:
               - type: CustomControl
                 name: size_inputs
+              - type: CustomControl
+                name: plotLabels
 
 
 
