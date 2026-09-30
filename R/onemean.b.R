@@ -116,12 +116,14 @@ onemeanClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           if (!self$options$input_mode == "use_matrix" && self$options$boot_yn) {
             call_boot <- rcs_onemean_boot(data = dasu,
                                           variable = var_name,
-                                          conf_boot = as.numeric(self$options$conf_boot)/100,
-                                          nh_boot = as.numeric(self$options$nh_boot),
-                                          alt_boot = self$options$alt_boot,
+                                          conf_boot = as.numeric(self$options$conf_ttest)/100,
+                                          nh_boot = as.numeric(self$options$nh_ttest),
+                                          alt_boot = self$options$alt_ttest,
                                           nd_num = as.numeric(self$options$nd_num),
                                           font_size = as.numeric(self$options$font_size),
-                                          testyn_boot = self$options$testyn_boot) 
+                                          testyn_boot = self$options$testyn_ttest,
+                                          boot_nullplot_yn = self$options$boot_nullplot_yn,
+                                          boot_intervalplot_yn = self$options$boot_intervalplot_yn) 
 
             tbl <- as.character(call_boot$table)
             wrapper_div_style <- "width: 185%; max-width: 1400px; overflow-x: auto;"
@@ -132,17 +134,17 @@ onemeanClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             #*************************************
             #*** Bootstrap null distribution plot
             #*************************************
-            if (self$options$boot_nullplot_yn) {
-              boot_plot <- call_boot$plot_null
-              self$results$boot_plot_null$setState(boot_plot)
-            }
+            #if (self$options$boot_nullplot_yn) {
+            #  boot_plot <- call_boot$plot_null
+              self$results$boot_plot_null$setState(call_boot$plot_null)
+            #}
             #*********************************
             #*** Bootstrap Visualise Interval
             #*********************************
-            if (self$options$boot_intervalplot_yn) {
-              boot_plot <- call_boot$plot_interval
-              self$results$boot_plot_interval$setState(boot_plot)
-            }
+            #if (self$options$boot_intervalplot_yn) {
+            #  boot_plot <- call_boot$plot_interval
+              self$results$boot_plot_interval$setState(call_boot$plot_interval)
+            #}
           }
           
           
