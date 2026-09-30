@@ -1,0 +1,155 @@
+---
+name:  oneprop
+title: One proportion
+menuGroup: Core Stat
+version: '1.0.0'
+jas: '1.2'
+
+options:
+
+    - name: input_mode
+      type: List
+      options:
+        - use_variables
+        - use_matrix
+      default: use_variables
+      
+      
+    - name: data
+      type: Data
+
+    - name: variable
+      title: Outcome
+      type: Variable
+      suggested: [ ordinal, nominal ]
+      permitted: [ factor ]
+      
+    - name: refl
+      title: Event
+      type: Level
+      variable: (variable)
+      
+    - name: nd_num
+      type: Integer
+      default: 1
+      hidden: true   
+      
+    - name: miss_yn
+      title: Include Missing
+      type: Bool
+      default: false  
+      
+
+    - name: font_size # <-- This is the name R will use
+      type: Number
+      default: 20
+      hidden: true
+
+      
+    - name: testyn_normal
+      title: Perform hypothesis test
+      type: Bool
+      default: false 
+      
+    - name: conf_normal
+      title: Confidence level
+      type: Number
+      min: 0
+      max: 100
+      default: 95  
+      
+    - name: nh_normal
+      title: Hypothesised proportion
+      type: Number
+      default: 0  
+      
+    - name: alt_normal
+      title: Alternative hypothesis
+      type: List
+      options:
+        - title: Greater
+          name:  greater
+        - title: Less
+          name:  less
+        - title: Two-sided
+          name:  two.sided
+      default: two.sided
+      
+    - name: meth
+      title: Confidence interval method
+      type: List
+      options:
+        - title: Exact
+          name:  exact
+        - title: Agresti-Coull
+          name:  ac
+        - title: Wald
+          name:  asymptotic
+        - title: Wilson
+          name:  wilson
+      default: asymptotic
+
+    - name: summ_p_x
+      title: Number of events
+      type: Number
+      default: 10  
+      hidden: true
+      
+    - name: summ_p_n
+      title: Number of trials
+      type: Number
+      default: 100  
+      hidden: true
+
+
+    - name: boot_yn
+      title: Calculate bootstrap interval
+      type: Bool
+      default: false 
+      
+#    - name: conf_boot
+#      title: Confidence level
+#      type: Number
+#      min: 0
+#      max: 100
+#      default: 95  
+      
+#    - name: testyn_boot
+#      title: Perform hypothesis test
+#      type: Bool
+#      default: false 
+      
+#    - name: nh_boot
+#      title: Hypothesised proportion
+#      type: Number
+#      default: 0  
+      
+#    - name: alt_boot
+#      title: Alternative hypothesis
+#      type: List
+#      options:
+#        - title: Greater
+#          name:  greater
+#        - title: Less
+#          name:  less
+#        - title: Two-sided
+#          name:  two-sided
+#      default: two-sided
+
+      
+    - name: boot_nullplot_yn
+      title: Plot bootstrap null distribution
+      type: Bool
+      default: false 
+      
+      
+    - name: boot_intervalplot_yn
+      title: Visualise bootstrap interval
+      type: Bool
+      default: false
+      
+    - name: miss_text
+      title: Missing Values Label
+      type: String
+      hidden: true
+...

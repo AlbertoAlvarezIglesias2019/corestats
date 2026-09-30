@@ -1,0 +1,44 @@
+---
+name:  oneprop
+title: One proportion
+jrs:   '1.1'
+
+items:
+
+    - name: ghostplot
+      type: Image
+      width: 900
+      height: 0
+      renderFun: .ghostplot
+
+    - name:  warning_message
+      type:  Html
+      
+    - name:  tablestyle_ttest
+      type:  Html
+
+
+    - name:  tablestyle_boot
+      type:  Html
+      clearWith:
+          - variable
+      visible: (boot_yn)
+  
+     
+    - name: boot_plot_interval
+      title: Bootstrap Intervals
+      type: Image
+      width: 500
+      height: 300
+      renderFun: .boot_plot_interval
+      visible: (boot_yn && boot_intervalplot_yn) 
+      
+    - name: boot_plot_null
+      title: Bootstrap Null Distribution
+      type: Image
+      width: 500
+      height: 300
+      renderFun: .boot_plot_null
+      visible: (boot_yn && testyn_normal && boot_nullplot_yn)
+
+...
