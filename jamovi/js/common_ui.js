@@ -46,6 +46,15 @@ module.exports = {
                 ui.summary_2g_input_container.$el.hide();
             }
         }
+        
+        // Toggle Summary Proportion input container (Categorical)
+        if (ui.summary_p_input_container && ui.summary_p_input_container.$el) {
+            if (isMatrix) {
+                ui.summary_p_input_container.$el.show();
+            } else {
+                ui.summary_p_input_container.$el.hide();
+            }
+        }
     },
 
     // =========================================================================
@@ -634,6 +643,97 @@ module.exports = {
     },
     
     // =========================================================================
+    // 4d. MANUAL SUMMARY DATA INPUT FOR PROPORTION (Categorical: Events x, Trials n)
+    // =========================================================================
+    summary_p_input_container_creating: function(ui, event) {
+        module.exports.renderSummaryPInput(ui);
+    },
+
+    renderSummaryPInput: function(ui) {
+        if (!ui.summary_p_input_container) return;
+        let $container = ui.summary_p_input_container.$el;
+
+        let xVal = (ui.summ_p_x && ui.summ_p_x.value() !== null) ? ui.summ_p_x.value() : 40;
+        let nVal = (ui.summ_p_n && ui.summ_p_n.value() !== null) ? ui.summ_p_n.value() : 100;
+
+        let htmlContent = `
+            <style>
+                .summp-panel { 
+                    font-family: sans-serif; 
+                    background: #f8fafc; 
+                    border: 1px solid #cbd5e1; 
+                    border-radius: 6px; 
+                    padding: 10px 12px; 
+                    margin-top: 10px; 
+                    width: fit-content; 
+                    max-width: 210px; 
+                    box-sizing: border-box; 
+                }
+                .summp-title { 
+                    font-size: 12px; 
+                    font-weight: bold; 
+                    color: #1e293b; 
+                    margin-bottom: 8px; 
+                    white-space: nowrap; 
+                }
+                .summp-row { 
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: flex-start; 
+                    background: white; 
+                    padding: 4px 8px; 
+                    border: 1px solid #e2e8f0; 
+                    border-radius: 4px; 
+                    gap: 8px; 
+                    box-sizing: border-box; 
+                    margin-bottom: 5px; 
+                }
+                .summp-row:last-child { margin-bottom: 0; }
+                .summp-label { 
+                    font-size: 11px; 
+                    font-weight: bold; 
+                    color: #475569; 
+                    width: 42px; 
+                    text-align: right; 
+                    flex-shrink: 0; 
+                }
+                .summp-input { 
+                    width: 65px; 
+                    flex-grow: 0; 
+                    padding: 3px 6px; 
+                    border: 1px solid #cbd5e1; 
+                    border-radius: 4px; 
+                    font-size: 12px; 
+                    outline: none; 
+                    text-align: center; 
+                }
+            </style>
+            <div class="summp-panel">
+                <div class="summp-title">Summary Statistics Input</div>
+                <div class="summp-row">
+                    <span class="summp-label">Events</span>
+                    <input type="number" id="jmv-summp-x" class="summp-input" min="0" step="1" value="${xVal}">
+                </div>
+                <div class="summp-row">
+                    <span class="summp-label">Trials</span>
+                    <input type="number" id="jmv-summp-n" class="summp-input" min="1" step="1" value="${nVal}">
+                </div>
+            </div>
+        `;
+
+        $container.html(htmlContent);
+
+        // Bind events to update Jamovi options
+        $container.find('#jmv-summp-x').on('input', function() {
+            if (ui.summ_p_x) ui.summ_p_x.setValue(parseInt(this.value) || 0);
+        });
+        $container.find('#jmv-summp-n').on('input', function() {
+            if (ui.summ_p_n) ui.summ_p_n.setValue(parseInt(this.value) || 1);
+        });
+    },
+    
+    
+    // =========================================================================
     // 5. LIFECYCLE MEMORY SYNC & RESTORE
     // =========================================================================
     view_loaded: function(ui, event) {
@@ -647,5 +747,6 @@ module.exports = {
         if (ui.table_input_container && ui.table_input_container.$el) module.exports.renderMatrixGrid(ui);
         if (ui.summary_input_container && ui.summary_input_container.$el) module.exports.renderSummaryInput(ui);
         if (ui.summary_2g_input_container && ui.summary_2g_input_container.$el) module.exports.renderSummary2GInput(ui);
+        if (ui.summary_p_input_container && ui.summary_p_input_container.$el) module.exports.renderSummaryPInput(ui);
     }
 };
