@@ -107,7 +107,8 @@
 #' )
 #' call_boot$plot_interval
 #' 
-rcs_onemean_boot <- function(data, variable, conf_boot, nh_boot, alt_boot, nd_num, font_size, testyn_boot = FALSE) {
+rcs_onemean_boot <- function(data, variable, conf_boot, nh_boot, alt_boot, nd_num, font_size, testyn_boot = FALSE, 
+                             boot_nullplot_yn = FALSE, boot_intervalplot_yn = FALSE) {
   
   # =========================================================================
   # 1. DATA PREPARATION AND INFER WORKFLOW
@@ -204,38 +205,46 @@ rcs_onemean_boot <- function(data, variable, conf_boot, nh_boot, alt_boot, nd_nu
   
   
   # 3. Create ggplot equivalents for infer::visualize()
-  plot_null <- ggplot2::ggplot(null_dist, ggplot2::aes(x = stat)) +
-    ggplot2::geom_histogram(bins = 30, fill = "gray80", color = "white") +
-    ggplot2::geom_vline(xintercept = x_bar, color = "red", linewidth = 1, linetype = "dashed") +
-    ggplot2::labs(title = "Null Distribution", x = "Statistic", y = "Count") +
-    ggplot2::theme_minimal()
-  
-  plot_interval <- ggplot2::ggplot(boot_dist, ggplot2::aes(x = stat)) +
-    ggplot2::geom_histogram(bins = 15, fill = "gray30", color = "white") +
-    ggplot2::annotate(
-      "rect", 
-      xmin = percentile_ci[1], 
-      xmax = percentile_ci[2], 
-      ymin = 0, 
-      ymax = Inf, 
-      fill = "#56D6B5", 
-      alpha = 0.5
-    ) +
-    #ggplot2::geom_vline(xintercept = percentile_ci, color = "#2ECC71", linewidth = 1) +
-    ggplot2::labs(
-      title = "Simulation-Based Bootstrap Distribution",
-      x = "stat",
-      y = "count"
-    ) +
-    ggplot2::theme_minimal()
-  
-  # Add vertical boundary lines only for finite limits
-  if (is.finite(percentile_ci[1])) {
-    plot_interval <- plot_interval + ggplot2::geom_vline(xintercept = percentile_ci[1], color = "#2ECC71", linewidth = 1)
+  plot_null <- NULL
+  if (boot_nullplot_yn) {
+    plot_null <- ggplot2::ggplot(null_dist, ggplot2::aes(x = stat)) +
+      ggplot2::geom_histogram(bins = 30, fill = "gray80", color = "white") +
+      ggplot2::geom_vline(xintercept = x_bar, color = "red", linewidth = 1, linetype = "dashed") +
+      ggplot2::labs(title = "Null Distribution", x = "Statistic", y = "Count") +
+      ggplot2::theme_minimal()
   }
-  if (is.finite(percentile_ci[2])) {
-    plot_interval <- plot_interval + ggplot2::geom_vline(xintercept = percentile_ci[2], color = "#2ECC71", linewidth = 1)
+    
+
+  plot_interval <- NULL
+  if (boot_intervalplot_yn) {
+    plot_interval <- ggplot2::ggplot(boot_dist, ggplot2::aes(x = stat)) +
+      ggplot2::geom_histogram(bins = 15, fill = "gray30", color = "white") +
+      ggplot2::annotate(
+        "rect", 
+        xmin = percentile_ci[1], 
+        xmax = percentile_ci[2], 
+        ymin = 0, 
+        ymax = Inf, 
+        fill = "#56D6B5", 
+        alpha = 0.5
+      ) +
+      #ggplot2::geom_vline(xintercept = percentile_ci, color = "#2ECC71", linewidth = 1) +
+      ggplot2::labs(
+        title = "Simulation-Based Bootstrap Distribution",
+        x = "stat",
+        y = "count"
+      ) +
+      ggplot2::theme_minimal()
+    
+    # Add vertical boundary lines only for finite limits
+    if (is.finite(percentile_ci[1])) {
+      plot_interval <- plot_interval + ggplot2::geom_vline(xintercept = percentile_ci[1], color = "#2ECC71", linewidth = 1)
+    }
+    if (is.finite(percentile_ci[2])) {
+      plot_interval <- plot_interval + ggplot2::geom_vline(xintercept = percentile_ci[2], color = "#2ECC71", linewidth = 1)
+    }
   }
+
   
   # Create a ggplot object for the null distribution plot.
   #plot_null <- infer::visualize(null_dist) +
@@ -323,7 +332,7 @@ rcs_onemean_boot <- function(data, variable, conf_boot, nh_boot, alt_boot, nd_nu
     fn2_body <- data.table::fcase(
       alt_boot == "greater",   paste0("H<sub>1</sub>: &mu;&gt;", nh_boot),
       alt_boot == "less",      paste0("H<sub>1</sub>: &mu;&lt;", nh_boot),
-      alt_boot == "two-sided", paste0("H<sub>1</sub>: &mu;&ne;", nh_boot)
+      alt_boot == "two.sided", paste0("H<sub>1</sub>: &mu;&ne;", nh_boot)
     )
     fn2 <- paste0("<i>", fn2_body, "</i>")
     footnotes_html <- c(fn1, fn2)
