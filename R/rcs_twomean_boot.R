@@ -208,7 +208,7 @@ rcs_twomean_boot <- function(data, variable, by, conf_boot, nh_boot, alt_boot,
     fn2_body <- data.table::fcase(
       alt_boot == "greater",   paste0("H<sub>1</sub>: &mu;<sub>1</sub> - &mu;<sub>2</sub>&gt;", nh_boot),
       alt_boot == "less",      paste0("H<sub>1</sub>: &mu;<sub>1</sub> - &mu;<sub>2</sub>&lt;", nh_boot),
-      alt_boot == "two-sided", paste0("H<sub>1</sub>: &mu;<sub>1</sub> - &mu;<sub>2</sub>&ne;", nh_boot)
+      alt_boot == "two.sided", paste0("H<sub>1</sub>: &mu;<sub>1</sub> - &mu;<sub>2</sub>&ne;", nh_boot)
     )
     fn2 <- paste0("<i>", fn2_body, "</i>")
     footnotes_html <- c(fn1, fn2)
