@@ -64,7 +64,8 @@
 #' 
 #' 
 
-rcs_paired_ttest <- function(var1,var2, conf_ttest, nh_ttest, alt_ttest, nd_num, font_size, miss_yn = FALSE, testyn_ttest = FALSE) {
+rcs_paired_ttest <- function(var1,var2, conf_ttest, nh_ttest, alt_ttest, nd_num, font_size, miss_yn = FALSE, testyn_ttest = FALSE,
+                             miss_text = "Mis") {
   
   
   # --- 1. PREPARE DATA AND RUN T-TEST ---
@@ -108,7 +109,7 @@ rcs_paired_ttest <- function(var1,var2, conf_ttest, nh_ttest, alt_ttest, nd_num,
   )
   
   # Define the table column headers with HTML formatting.
-  col_headers_html <- c("N", "Mis", "Mean Diff", "SE Mean Diff",
+  col_headers_html <- c("N", miss_text, "Mean Diff", "SE Mean Diff",
                         paste0(conf_ttest * 100, "% CI for d<sup>1</sup>"),
                         "T-Value","DF",
                         "P-value<sup>2</sup>"
@@ -117,7 +118,7 @@ rcs_paired_ttest <- function(var1,var2, conf_ttest, nh_ttest, alt_ttest, nd_num,
   # Conditionally remove columns for missing values and p-value.
   if (!miss_yn) {
     dframe[, Mis := NULL]
-    col_headers_html <- col_headers_html[!col_headers_html %in% "Mis"]
+    col_headers_html <- col_headers_html[!col_headers_html %in% miss_text]
   }
   if (!testyn_ttest) {
     dframe[, c("Pval", "Tt", "Df") := NULL]
