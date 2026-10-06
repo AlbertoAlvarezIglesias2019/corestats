@@ -37,6 +37,7 @@ pairedClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         var2 <- self$data[[self$options$var2]]
         
       
+        mt <- ifelse(is.null(self$options$miss_text) || self$options$miss_text=="", "Mis",self$options$miss_text )
         call_ttest <- rcs_paired_ttest(var1,
                                        var2, 
                                        conf_ttest = as.numeric(self$options$conf_ttest)/100,
@@ -45,7 +46,8 @@ pairedClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                        nd_num = self$options$nd_num,
                                        font_size = self$options$font_size,
                                        miss_yn = self$options$miss_yn,
-                                       testyn_ttest = self$options$testyn_ttest) 
+                                       testyn_ttest = self$options$testyn_ttest,
+                                       miss_text = mt) 
           
         
         tbl <- as.character(call_ttest$table)
@@ -62,11 +64,11 @@ pairedClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           
           call_boot <- rcs_paired_boot(var1,
                                        var2,
-                                       conf_boot = as.numeric(self$options$conf_boot)/100,
-                                       alt_boot = self$options$alt_boot,
+                                       conf_boot = as.numeric(self$options$conf_ttest)/100,
+                                       alt_boot = self$options$alt_ttest,
                                        nd_num = self$options$nd_num,
                                        font_size = self$options$font_size,
-                                       testyn_boot = self$options$testyn_boot,
+                                       testyn_boot = self$options$testyn_ttest,
                                        boot_nullplot_yn = self$options$boot_nullplot_yn,
                                        boot_intervalplot_yn = self$options$boot_intervalplot_yn)
           
