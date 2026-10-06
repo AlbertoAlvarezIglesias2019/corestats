@@ -130,48 +130,48 @@ options:
  
       
     - name: boot_yn
-      title: Calculate interval
+      title: Calculate bootstrap interval
       type: Bool
       default: false 
       
-    - name: conf_boot
-      title: Confidence level
-      type: Number
-      min: 0
-      max: 100
-      default: 95  
+ #   - name: conf_boot
+#      title: Confidence level
+#      type: Number
+#      min: 0
+#      max: 100
+#      default: 95  
       
-    - name: testyn_boot
-      title: Perform hypothesis test
-      type: Bool
-      default: false 
+#    - name: testyn_boot
+#      title: Perform hypothesis test
+#      type: Bool
+#      default: false 
       
-    - name: nh_boot
-      title: hypothesised proportion
-      type: Number
-      default: 0  
+#    - name: nh_boot
+#      title: hypothesised proportion
+#      type: Number
+#      default: 0  
       
-    - name: alt_boot
-      title: Alternative hypothesis
-      type: List
-      options:
-        - title: Greater
-          name:  greater
-        - title: Less
-          name:  less
-        - title: Two-sided
-          name:  two-sided
-      default: two-sided
+#    - name: alt_boot
+#      title: Alternative hypothesis
+#      type: List
+#      options:
+#        - title: Greater
+#          name:  greater
+#        - title: Less
+#          name:  less
+#        - title: Two-sided
+#          name:  two-sided
+#      default: two-sided
 
       
     - name: boot_nullplot_yn
-      title: Plot Null Distribution
+      title: Plot bootstrap null distribution
       type: Bool
       default: false 
       
       
     - name: boot_intervalplot_yn
-      title: Visualise intervals
+      title: Visualise bootstrap interval
       type: Bool
       default: false
       
