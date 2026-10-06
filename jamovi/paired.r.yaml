@@ -45,7 +45,7 @@ items:
       width: 500
       height: 300
       renderFun: .boot_plot_null
-      visible: (boot_yn && testyn_boot && boot_nullplot_yn)
+      visible: (boot_yn && testyn_ttest && boot_nullplot_yn)
       
 
 ...
