@@ -141,7 +141,7 @@ rcs_twomean_ttest <- function(data, variable, by, conf_ttest, alt_ttest, ev = TR
   if (!miss_yn) {
     dframe$Mis1 <- NULL
     dframe$Mis2 <- NULL
-    col_headers_html <- col_headers_html[!col_headers_html %in% "Mis"]
+    col_headers_html <- col_headers_html[!col_headers_html %in% miss_text]
     header_vector <- stats::setNames(c(1, 2, 2), c(" ", levs[1], levs[2]))
   }
   
