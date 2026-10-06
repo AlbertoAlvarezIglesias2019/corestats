@@ -63,7 +63,8 @@
 #'   testyn_ttest = FALSE
 #' )
 
-rcs_onemean_ttest <- function(data, variable, conf_ttest, nh_ttest, alt_ttest, nd_num, font_size, miss_yn = FALSE, testyn_ttest = FALSE) {
+rcs_onemean_ttest <- function(data, variable, conf_ttest, nh_ttest, alt_ttest, nd_num, font_size, miss_yn = FALSE, testyn_ttest = FALSE,
+                              miss_text = "Mis") {
   
   # --- 1. PREPARE DATA AND RUN T-TEST ---
   
@@ -114,7 +115,7 @@ rcs_onemean_ttest <- function(data, variable, conf_ttest, nh_ttest, alt_ttest, n
   
   # Define the table column headers with HTML formatting.
   col_headers_html <- c(
-    "Variable", "N", "Mis", "Mean (SD)", "SE Mean",
+    "Variable", "N", miss_text, "Mean (SD)", "SE Mean",
     paste0(conf_ttest * 100, "% CI for &mu;<sup>1</sup>"),
     "T-Value", "DF",
     "P-value<sup>2</sup>"
@@ -123,7 +124,7 @@ rcs_onemean_ttest <- function(data, variable, conf_ttest, nh_ttest, alt_ttest, n
   # Conditionally remove columns for missing values and p-value.
   if (!miss_yn) {
     dframe$Mis <- NULL
-    col_headers_html <- col_headers_html[col_headers_html != "Mis"]
+    col_headers_html <- col_headers_html[col_headers_html != miss_text]
   }
   if (!testyn_ttest) {
     dframe$Pval <- NULL
