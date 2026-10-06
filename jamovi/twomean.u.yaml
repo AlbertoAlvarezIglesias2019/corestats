@@ -88,6 +88,22 @@ children:
                 name: alt_ttest
                 enable: (testyn_ttest)
 
+  - type: Label
+    label: Bootstrap
+    children:
+      - type: CheckBox
+        name: boot_yn
+      - type: LayoutBox
+        margin: large
+        style: inline
+        children:
+          - type: CheckBox
+            name: boot_intervalplot_yn
+            enable: (boot_yn)
+          - type: CheckBox
+            name: boot_nullplot_yn
+            enable: (boot_yn && testyn_ttest)
+            
   - type: CollapseBox
     label: Options
     collapsed: true
@@ -115,51 +131,51 @@ children:
 
 
 
-  - type: CollapseBox
-    label: Bootstrap
-    collapsed: true
-    margin: large
-    children:
-      - type: LayoutBox
-        margin: large
-        children:
-          - type: CheckBox
-            name: boot_yn
-            enable: (variable)
-
-      - type: Label
-        label: Bootstrap Interval
-        children:
-          - type: LayoutBox
-            margin: large
-            children:
-              - type: TextBox
-                name: conf_boot
-                format: number
-                enable: (boot_yn)
-              - type: CheckBox
-                name: boot_intervalplot_yn
-                enable: (boot_yn)
-
-      - type: Label
-        label: Bootstrap Hypothesis Test
-        children:
-          - type: LayoutBox
-            margin: large
-            children:
-              - type: CheckBox
-                name: testyn_boot
-                enable: (boot_yn)
-              - type: LayoutBox
-                style: inline
-                children:
-                  - type: TextBox
-                    name: nh_boot
-                    format: number
-                    enable: (testyn_boot && boot_yn)
-                  - type: ComboBox
-                    name: alt_boot
-                    enable: (testyn_boot && boot_yn)
-              - type: CheckBox
-                name: boot_nullplot_yn
-                enable: (boot_yn && testyn_boot)
+#  - type: CollapseBox
+#    label: Bootstrap
+#    collapsed: true
+#    margin: large
+#    children:
+#      - type: LayoutBox
+#        margin: large
+#        children:
+#          - type: CheckBox
+#            name: boot_yn
+#            enable: (variable)#
+#
+#      - type: Label
+#        label: Bootstrap Interval
+#        children:
+#          - type: LayoutBox
+#            margin: large
+#            children:
+#              - type: TextBox
+#                name: conf_boot
+#                format: number
+#                enable: (boot_yn)
+#              - type: CheckBox
+#                name: boot_intervalplot_yn
+#                enable: (boot_yn)#
+#
+#      - type: Label
+#        label: Bootstrap Hypothesis Test
+#        children:
+#          - type: LayoutBox
+#            margin: large
+#            children:
+#              - type: CheckBox
+#                name: testyn_boot
+#                enable: (boot_yn)
+#              - type: LayoutBox
+#                style: inline
+#                children:
+#                  - type: TextBox
+#                    name: nh_boot
+#                    format: number
+#                    enable: (testyn_boot && boot_yn)
+#                  - type: ComboBox
+#                    name: alt_boot
+#                    enable: (testyn_boot && boot_yn)
+#              - type: CheckBox
+#                name: boot_nullplot_yn
+#                enable: (boot_yn && testyn_boot)
