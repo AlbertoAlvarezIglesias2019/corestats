@@ -48,6 +48,7 @@ onemeanClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             dasu <- data.table::as.data.table(self$data[, var_name, drop = FALSE])
           }
           
+          mt <- ifelse(is.null(self$options$miss_text) || self$options$miss_text=="", "Mis",self$options$miss_text )
           ###################################
           ### Creates the output (ttest)
           ###################################
@@ -59,7 +60,8 @@ onemeanClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                           nd_num = as.numeric(self$options$nd_num),
                                           font_size = as.numeric(self$options$font_size),
                                           miss_yn = self$options$miss_yn,
-                                          testyn_ttest = self$options$testyn_ttest) 
+                                          testyn_ttest = self$options$testyn_ttest,
+                                          miss_text = mt) 
           
           tbl <- as.character(call_ttest$table)
           wrapper_div_style <- "width: 185%; max-width: 1400px; overflow-x: auto;"
