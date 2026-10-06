@@ -96,7 +96,7 @@ twomeanClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           } else {self$results$warning_message$setVisible(FALSE)}
           
           
-          
+          mt <- ifelse(is.null(self$options$miss_text) || self$options$miss_text=="", "Mis",self$options$miss_text )
           ###################################
           ### Creates the output (ttest)
           ###################################
@@ -111,7 +111,7 @@ twomeanClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                           font_size = as.numeric(self$options$font_size),
                                           miss_yn = self$options$miss_yn,
                                           testyn_ttest = self$options$testyn_ttest,
-                                          miss_text = self$options$miss_text) 
+                                          miss_text = mt) 
           
           tbl1 <- as.character(call_ttest$table_summ)
           tbl2 <- as.character(call_ttest$table_infe)
@@ -131,12 +131,12 @@ twomeanClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             call_boot <- rcs_twomean_boot(data = dasu,
                                           variable = var_name,
                                           by = grp_name,
-                                          conf_boot = as.numeric(self$options$conf_boot)/100,
-                                          nh_boot = as.numeric(self$options$nh_boot),
-                                          alt_boot = self$options$alt_boot,
+                                          conf_boot = as.numeric(self$options$conf_ttest)/100,
+                                          nh_boot = as.numeric(self$options$nh_ttest),
+                                          alt_boot = self$options$alt_ttest,
                                           nd_num = as.numeric(self$options$nd_num),
                                           font_size = as.numeric(self$options$font_size),
-                                          testyn_boot = self$options$testyn_boot,
+                                          testyn_boot = self$options$testyn_ttest,
                                           boot_nullplot_yn = self$options$boot_nullplot_yn,
                                           boot_intervalplot_yn = self$options$boot_intervalplot_yn) 
             
