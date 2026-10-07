@@ -55,6 +55,15 @@ module.exports = {
                 ui.summary_p_input_container.$el.hide();
             }
         }
+        
+        // Toggle Summary Proportion input container (Two groups)
+        if (ui.summary_p_2g_input_container && ui.summary_p_2g_input_container.$el) {
+            if (isMatrix) {
+                ui.summary_p_2g_input_container.$el.show();
+            } else {
+                ui.summary_p_2g_input_container.$el.hide();
+            }
+        }
     },
 
     // =========================================================================
@@ -732,6 +741,124 @@ module.exports = {
         });
     },
     
+    // =========================================================================
+    // 4e. MANUAL SUMMARY DATA INPUT FOR PROPORTION (Two Groups: Events x, Trials n)
+    // =========================================================================
+    summary_p_2g_input_container_creating: function(ui, event) {
+        module.exports.renderSummaryP2GInput(ui);
+    },
+
+    renderSummaryP2GInput: function(ui) {
+        if (!ui.summary_p_2g_input_container) return;
+        let $container = ui.summary_p_2g_input_container.$el;
+
+        let x1Val = (ui.summ_p1_x && ui.summ_p1_x.value() !== null) ? ui.summ_p1_x.value() : 40;
+        let n1Val = (ui.summ_p1_n && ui.summ_p1_n.value() !== null) ? ui.summ_p1_n.value() : 100;
+        let x2Val = (ui.summ_p2_x && ui.summ_p2_x.value() !== null) ? ui.summ_p2_x.value() : 50;
+        let n2Val = (ui.summ_p2_n && ui.summ_p2_n.value() !== null) ? ui.summ_p2_n.value() : 100;
+
+        let htmlContent = `
+            <style>
+                .sum2gp-panel { 
+                    font-family: sans-serif; 
+                    background: #f8fafc; 
+                    border: 1px solid #cbd5e1; 
+                    border-radius: 6px; 
+                    padding: 10px 12px; 
+                    margin-top: 10px; 
+                    width: fit-content; 
+                    max-width: 320px; 
+                    box-sizing: border-box; 
+                }
+                .sum2gp-title { 
+                    font-size: 12px; 
+                    font-weight: bold; 
+                    color: #1e293b; 
+                    margin-bottom: 10px; 
+                    white-space: nowrap; 
+                    text-align: center;
+                }
+                .sum2gp-header {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 4px;
+                    padding: 0 8px;
+                }
+                .sum2gp-header-empty {
+                    width: 42px;
+                    flex-shrink: 0;
+                    margin-right: 8px;
+                }
+                .sum2gp-header-label {
+                    font-size: 11px;
+                    font-weight: bold;
+                    color: #475569;
+                    width: 65px;
+                    text-align: center;
+                    margin-right: 8px;
+                }
+                .sum2gp-header-label:last-child { margin-right: 0; }
+                .sum2gp-row { 
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: flex-start; 
+                    background: white; 
+                    padding: 4px 8px; 
+                    border: 1px solid #e2e8f0; 
+                    border-radius: 4px; 
+                    gap: 8px; 
+                    box-sizing: border-box; 
+                    margin-bottom: 5px; 
+                }
+                .sum2gp-row:last-child { margin-bottom: 0; }
+                .sum2gp-label { 
+                    font-size: 11px; 
+                    font-weight: bold; 
+                    color: #475569; 
+                    width: 42px; 
+                    text-align: right; 
+                    flex-shrink: 0; 
+                }
+                .sum2gp-input { 
+                    width: 65px; 
+                    flex-grow: 0; 
+                    padding: 3px 6px; 
+                    border: 1px solid #cbd5e1; 
+                    border-radius: 4px; 
+                    font-size: 12px; 
+                    outline: none; 
+                    text-align: center; 
+                }
+            </style>
+            <div class="sum2gp-panel">
+                <div class="sum2gp-title">Summary Statistics Input</div>
+                <div class="sum2gp-header">
+                    <div class="sum2gp-header-empty"></div>
+                    <div class="sum2gp-header-label">Group 1</div>
+                    <div class="sum2gp-header-label">Group 2</div>
+                </div>
+                <div class="sum2gp-row">
+                    <span class="sum2gp-label">Events</span>
+                    <input type="number" id="jmv-summp1-x" class="sum2gp-input" min="0" step="1" value="${x1Val}">
+                    <input type="number" id="jmv-summp2-x" class="sum2gp-input" min="0" step="1" value="${x2Val}">
+                </div>
+                <div class="sum2gp-row">
+                    <span class="sum2gp-label">Trials</span>
+                    <input type="number" id="jmv-summp1-n" class="sum2gp-input" min="1" step="1" value="${n1Val}">
+                    <input type="number" id="jmv-summp2-n" class="sum2gp-input" min="1" step="1" value="${n2Val}">
+                </div>
+            </div>
+        `;
+
+        $container.html(htmlContent);
+
+        // Bind events to update Jamovi options
+        $container.find('#jmv-summp1-x').on('input', function() { if (ui.summ_p1_x) ui.summ_p1_x.setValue(parseInt(this.value) || 0); });
+        $container.find('#jmv-summp1-n').on('input', function() { if (ui.summ_p1_n) ui.summ_p1_n.setValue(parseInt(this.value) || 1); });
+        $container.find('#jmv-summp2-x').on('input', function() { if (ui.summ_p2_x) ui.summ_p2_x.setValue(parseInt(this.value) || 0); });
+        $container.find('#jmv-summp2-n').on('input', function() { if (ui.summ_p2_n) ui.summ_p2_n.setValue(parseInt(this.value) || 1); });
+    },
+    
     
     // =========================================================================
     // 5. LIFECYCLE MEMORY SYNC & RESTORE
@@ -748,5 +875,6 @@ module.exports = {
         if (ui.summary_input_container && ui.summary_input_container.$el) module.exports.renderSummaryInput(ui);
         if (ui.summary_2g_input_container && ui.summary_2g_input_container.$el) module.exports.renderSummary2GInput(ui);
         if (ui.summary_p_input_container && ui.summary_p_input_container.$el) module.exports.renderSummaryPInput(ui);
+        if (ui.summary_p_2g_input_container && ui.summary_p_2g_input_container.$el) module.exports.renderSummaryP2GInput(ui);
     }
 };
