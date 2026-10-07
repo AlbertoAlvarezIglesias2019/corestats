@@ -202,7 +202,8 @@ getintervals_bc <- function(data, ccc, rrr) {
 
 
 
-wald_prop_diff_ci <- function(x1, n1, x2, n2, conf.level = 0.95, alternative = c("two.sided", "less", "greater")) {
+wald_prop_diff_ci <- function(x1, n1, x2, n2, conf.level = 0.95, alternative = c("two.sided", "less", "greater"), nh_normal = 0) {
+  
   # Input Validation
   alternative <- match.arg(alternative)
   if (conf.level <= 0 | conf.level >= 1) {
@@ -210,6 +211,9 @@ wald_prop_diff_ci <- function(x1, n1, x2, n2, conf.level = 0.95, alternative = c
   }
   if (x1 < 0 | x2 < 0 | n1 <= 0 | n2 <= 0 | x1 > n1 | x2 > n2) {
     stop("Invalid values for successes (x) or trials (n).")
+  }
+  if (nh_normal < -1 || nh_normal > 1) {
+    stop("nh_normal must be between -1 and 1.")
   }
   
   # 1. Calculate the core components
@@ -225,13 +229,12 @@ wald_prop_diff_ci <- function(x1, n1, x2, n2, conf.level = 0.95, alternative = c
   upper_bound <- 1
   
   # Determine the critical Z-value based on the alternative
+  alpha <- 1 - conf.level
   if (alternative == "two.sided") {
     # For a two-sided interval, use Z-score for alpha/2
-    alpha <- 1 - conf.level
     z_critical <- qnorm(1 - alpha / 2)
   } else {
     # For one-sided intervals, use Z-score for alpha
-    alpha <- 1 - conf.level
     z_critical <- qnorm(1 - alpha)
   }
   
@@ -252,6 +255,9 @@ wald_prop_diff_ci <- function(x1, n1, x2, n2, conf.level = 0.95, alternative = c
     upper_bound <- diff_prop + ME
   }
   
+  # Optional: Calculate Z-statistic incorporating the null hypothesis value (nh_normal)
+  z_stat <- if (SE > 0) (diff_prop - nh_normal) / SE else 0
+  
   # 3. Format the results
   result <- data.frame(
     Estimate = diff_prop,
@@ -259,7 +265,9 @@ wald_prop_diff_ci <- function(x1, n1, x2, n2, conf.level = 0.95, alternative = c
     Lower_CI = max(-1, lower_bound),  # Constrain to [-1, 1]
     Upper_CI = min(1, upper_bound),    # Constrain to [-1, 1]
     Conf_Level = conf.level,
-    Alternative = alternative
+    Alternative = alternative,
+    Null_Value = nh_normal,
+    Z_Statistic = z_stat
   )
   
   # Set the row name
