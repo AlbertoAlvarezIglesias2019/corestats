@@ -108,21 +108,26 @@ rcs_oneprop_boot <- function(data, variable, conf_boot, nh_boot, alt_boot, nd_nu
   # Create ggplot visualizations conditionally
   plot_null <- NULL
   if (boot_nullplot_yn) {
-    plot_null <- ggplot2::ggplot(null_dist, ggplot2::aes(x = stat)) +
+    plot_null <- ggplot2::ggplot(null_dist, ggplot2::aes(x = stat*100)) +
       ggplot2::geom_histogram(bins = 30, fill = "gray80", color = "white") +
-      ggplot2::geom_vline(xintercept = p_hat, color = "red", linewidth = 1, linetype = "dashed") +
-      ggplot2::labs(title = "Null Distribution", x = "Statistic", y = "Count") +
+      ggplot2::geom_vline(xintercept = p_hat*100, color = "red", linewidth = 1, linetype = "dashed")+ 
+      ggplot2::scale_x_continuous(
+        #limits = c(-100, 100),
+        labels = function(x) paste0(x, "%")
+      ) +
+      ggplot2::labs(title = "Null Distribution", x = "Statistic (%)", y = "Count") +
       ggplot2::theme_minimal()
+    
   }
   
   plot_interval <- NULL
   if (boot_intervalplot_yn) {
-    plot_interval <- ggplot2::ggplot(boot_dist, ggplot2::aes(x = stat)) +
+    plot_interval <- ggplot2::ggplot(boot_dist, ggplot2::aes(x = stat * 100)) +
       ggplot2::geom_histogram(bins = 15, fill = "gray30", color = "white") +
       ggplot2::annotate(
         "rect", 
-        xmin = percentile_ci[1], 
-        xmax = percentile_ci[2], 
+        xmin = percentile_ci[1] * 100, 
+        xmax = percentile_ci[2] * 100, 
         ymin = 0, 
         ymax = Inf, 
         fill = "#56D6B5", 
@@ -130,16 +135,16 @@ rcs_oneprop_boot <- function(data, variable, conf_boot, nh_boot, alt_boot, nd_nu
       ) +
       ggplot2::labs(
         title = "Simulation-Based Bootstrap Distribution",
-        x = "stat",
+        x = "Statistic (%)",
         y = "count"
       ) +
       ggplot2::theme_minimal()
     
     if (is.finite(percentile_ci[1]) && percentile_ci[1] > 0) {
-      plot_interval <- plot_interval + ggplot2::geom_vline(xintercept = percentile_ci[1], color = "#2ECC71", linewidth = 1)
+      plot_interval <- plot_interval + ggplot2::geom_vline(xintercept = percentile_ci[1]*100, color = "#2ECC71", linewidth = 1)
     }
     if (is.finite(percentile_ci[2]) && percentile_ci[2] < 1) {
-      plot_interval <- plot_interval + ggplot2::geom_vline(xintercept = percentile_ci[2], color = "#2ECC71", linewidth = 1)
+      plot_interval <- plot_interval + ggplot2::geom_vline(xintercept = percentile_ci[2]*100, color = "#2ECC71", linewidth = 1)
     }
   }
   
@@ -147,21 +152,21 @@ rcs_oneprop_boot <- function(data, variable, conf_boot, nh_boot, alt_boot, nd_nu
   # 3. BUILD THE TABLE DATA AND HTML STRINGS
   # =========================================================================
   dframe <- data.frame(
+    Variable = success_level,
     Ps = paste0(ndformat(p_hat_boot * 100, nd_num), "%"),
     Ci = percentile_ci_str,
     Pval = pvalue
   )
   row.names(dframe) <- NULL
   
-  col_headers_html <- c(
-    paste0("Bootstrap ", success_level),
+  col_headers_html <- c(variable,"Bootstap Prop",
     paste0(conf_boot * 100, "% Bootstrap CI for p<sup>1</sup>"),
     "P-value<sup>2</sup>"
   )
   
   if (!testyn_boot) {
-    dframe <- dframe[, c("Ps", "Ci")]
-    col_headers_html <- col_headers_html[1:2]
+    dframe <- dframe[, c("Variable","Ps", "Ci")]
+    col_headers_html <- col_headers_html[1:3]
   }
   
   caption_html <- paste0(
