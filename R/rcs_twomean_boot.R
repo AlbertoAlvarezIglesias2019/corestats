@@ -186,7 +186,7 @@ rcs_twomean_boot <- function(data, variable, by, conf_boot, nh_boot, alt_boot,
   )
   
   col_headers_html <- c(
-    "Bootstrap<br> Diff in Means",
+    "Bootstrap Diff",
     paste0(conf_boot * 100, "% Bootstrap CI for &mu;<sub>1</sub> - &mu;<sub>2</sub><sup>1</sup>"),
     "P-value<sup>2</sup>"
   )
