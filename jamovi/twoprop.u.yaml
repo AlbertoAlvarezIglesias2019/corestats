@@ -120,7 +120,6 @@ children:
             children:
               - type: CheckBox
                 name: miss_yn
-                
       - type: Label
         label: Display
         children:
