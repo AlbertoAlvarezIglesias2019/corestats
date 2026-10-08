@@ -1,0 +1,130 @@
+title: Chi-Square Test for Association
+name: chisquare
+jus: '3.0'
+stage: 0
+compilerMode: tame
+children:
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: Label
+        label: Data Input Method
+        children:
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: RadioButton
+                name: mode_variables_btn
+                optionName: input_mode
+                optionPart: use_variables
+                label: Variables from dataset
+              - type: RadioButton
+                name: mode_matrix_btn
+                optionName: input_mode
+                optionPart: use_matrix
+                label: Summarised data in a table
+
+  - type: VariableSupplier
+    name: variables_panel
+    persistentItems: false
+    stretchFactor: 1
+    children:
+      - type: TargetLayoutBox
+        label: Rows (Outcome)
+        children:
+          - type: VariablesListBox
+            name: rrr
+            maxItemCount: 1
+            isTarget: true
+          - type: LevelSelector
+            name: refr
+      - type: TargetLayoutBox
+        label: Columns (Grouping variable)
+        children:
+          - type: VariablesListBox
+            name: ccc
+            maxItemCount: 1
+            isTarget: true
+          - type: LevelSelector
+            name: refc
+            
+  - type: CustomControl
+    name: table_input_container
+
+
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: plotdata_yn
+      - type: CheckBox
+        name: addfisher_yn
+  - type: CustomControl
+    name: decimal_inputs
+
+
+  - type: CollapseBox
+    label: Options
+    collapsed: true
+    margin: large
+    children:
+      - type: Label
+        label: Missing Values
+        children:
+          - type: LayoutBox
+            margin: large
+            children:
+              - type: CheckBox
+                name: miss_yn
+      - type: Label
+        label: Display
+        children:
+          - type: LayoutBox
+            margin: large
+            children:
+              - type: CustomControl
+                name: size_inputs
+              - type: CustomControl
+                name: plotLabels
+
+
+
+  - type: CollapseBox
+    label: Intervals
+    collapsed: true
+    margin: large
+    children:
+      - type: CheckBox
+        name: intervals_yn
+      - type: ComboBox
+        name: intervals_method
+        enable: (intervals_yn)
+      - type: Label
+        label: Display
+        children:
+          - type: CheckBox
+            name: intervals_plot_yn
+            enable: (intervals_yn)
+            
+  - type: CollapseBox
+    label: Comparisons
+    collapsed: true
+    margin: large
+    children:
+      - type: CheckBox
+        name: ph_yn
+      - type: ComboBox
+        name: method
+        enable: (ph_yn)
+      - type: CheckBox
+        name: transpose_yn
+        enable: (ph_yn)
+      - type: Label
+        label: Display
+        children:
+          - type: CheckBox
+            name: ph_plot_intervals_yn
+            enable: (ph_yn)
+
+
+

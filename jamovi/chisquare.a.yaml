@@ -1,0 +1,163 @@
+---
+name:  chisquare
+title: Chi-Square Test for Association
+menuGroup: Core Stat
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: input_mode
+      type: List
+      options:
+        - use_variables
+        - use_matrix
+      default: use_variables
+      
+      
+    - name: data
+      type: Data
+
+    - name: rrr
+      title: Rows (Outcome)
+      type: Variable
+      suggested: [ ordinal, nominal ]
+      permitted: [ factor ]
+
+    - name: refr
+      title: Event
+      type: Level
+      variable: (rrr) 
+      
+    - name: ccc
+      title: Columns (Grouping variable)
+      type: Variable
+      suggested: [ ordinal, nominal ]
+      permitted: [ factor ]
+     
+    - name: refc
+      title: Reference level
+      type: Level
+      variable: (ccc)   
+      
+    - name: nd_num
+      type: Integer
+      default: 1
+      hidden: true   
+      
+    - name: miss_yn
+      title: Include Missing
+      type: Bool
+      default: false  
+      
+
+    - name: font_size # <-- This is the name R will use
+      type: Number
+      default: 20
+      hidden: true
+
+
+    - name: plotdata_yn
+      title: Plot Data
+      type: Bool
+      default: false
+      
+    - name: intervals_yn
+      title: Perform two-sample comparisons
+      type: Bool
+      default: false 
+
+    - name: intervals_method
+      title: Method of adjustment
+      type: List
+      options:
+        - title: None
+          name:  none
+        - title: Bonferroni
+          name:  bonferroni
+      default: bonferroni
+      
+    - name: intervals_plot_yn
+      title: Display intervals
+      type: Bool
+      default: false 
+      
+    - name: ph_yn
+      title: Perform pairwise comparisons
+      type: Bool
+      default: false 
+      
+    - name: method
+      title: Method adjusted p-value
+      type: List
+      options:
+        - title: None
+          name:  none
+        - title: Bonferroni
+          name:  bonferroni
+        - title: Holm
+          name:  holm
+        - title: Hochberg
+          name:  hochberg
+        - title: Hommel
+          name:  hommel
+      default: bonferroni
+      
+    - name: transpose_yn
+      title: Transpose data
+      type: Bool
+      default: false 
+      
+    - name: ph_plot_intervals_yn
+      title: Display intervals
+      type: Bool
+      default: false 
+
+    - name: addfisher_yn
+      title: Add Fisher's exact test
+      type: Bool
+      default: false 
+      
+
+    - name: n_row
+      title: Number of Rows
+      type: Integer
+      default: 4
+      min: 1
+      max: 10
+      hidden: true
+
+    - name: n_col
+      title: Number of Columns
+      type: Integer
+      default: 2
+      min: 1
+      max: 10
+      hidden: true
+
+    - name: table_json
+      title: Table Data Storage
+      type: String
+      default: ""
+      hidden: true
+
+    - name: summ_p1_x
+      type: Number
+      default: 10  
+      hidden: true
+      
+
+      
+    - name: miss_text
+      title: Missing Values Label
+      type: String
+      hidden: true
+      
+    - name: rows_text
+      type: String
+      hidden: true
+
+    - name: cols_text
+      type: String
+      hidden: true
+      
+...

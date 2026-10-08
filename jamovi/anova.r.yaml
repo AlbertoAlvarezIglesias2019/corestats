@@ -1,0 +1,64 @@
+---
+name:  anova
+title: One-Way ANOVA
+jrs:   '1.1'
+
+items:
+
+    - name: ghostplot
+      type: Image
+      width: 900
+      height: 1
+      renderFun: .ghostplot
+      
+    - name:  warning_message_1
+      type:  Html
+
+    - name:  warning_message_2
+      type:  Html
+      
+    - name: data_plot
+      title: Data Visualisation
+      type: Image
+      width: 800
+      height: 500
+      renderFun: .data_plot
+      visible: (plotdata_yn)
+      
+    - name:  tablestyle_test_1
+      type:  Html
+
+    - name:  tablestyle_test_2
+      type:  Html
+
+    - name: residual_plot
+      title: Residual Diagnosis
+      type: Image
+      width: 800
+      height: 500
+      renderFun: .residual_plot
+      visible: (norma_assess_yn)
+      
+    - name:  tablestyle_ph
+      type:  Html
+      visible: (ph_yn)
+
+    - name: ph_interval_plot
+      title: Intervals Plot
+      type: Image
+      width: 800
+      height: 500
+      renderFun: .ph_interval_plot
+      visible: (ph_yn & ph_plot_intervals_yn)
+
+    - name: ph_inference_plot
+      title: Boxplot with Post-Hoc Test Results
+      type: Image
+      width: 800
+      height: 500
+      renderFun: .ph_inference_plot
+      visible: (ph_yn & ph_plot_significance_yn)
+
+
+
+...

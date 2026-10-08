@@ -1,0 +1,96 @@
+---
+name:  anova
+title: One-Way ANOVA
+menuGroup: Core Stat
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+
+    - name: variable
+      title: Outcome
+      type: Variable
+      suggested: [ continuous ]
+      permitted: [ numeric ]
+      
+    - name: by
+      title: Grouping variable
+      type: Variable
+      suggested: [ ordinal, nominal ]
+      permitted: [ factor ]
+     
+    - name: refl
+      title: Reference level
+      type: Level
+      variable: (by) 
+
+    - name: nd_num
+      type: Integer
+      default: 1
+      hidden: true   
+      
+    - name: miss_yn
+      title: Include Missing
+      type: Bool
+      default: false  
+      
+    - name: font_size # <-- This is the name R will use
+      type: Number
+      default: 20
+      hidden: true
+      
+    - name: plotdata_yn
+      title: Plot Data
+      type: Bool
+      default: false
+      
+    - name: norma_assess_yn
+      title: Residual Diagnosis
+      type: Bool
+      default: false 
+ 
+    - name: ev
+      title: Equal variances
+      type: Bool
+      default: true 
+      
+    - name: ph_yn
+      title: Perform pairwise comparisons
+      type: Bool
+      default: false 
+      
+    - name: method
+      title: Method
+      type: List
+      options:
+        - title: None
+          name:  none
+        - title: Bonferroni
+          name:  bonferroni
+        - title: Tukey
+          name:  tukey
+        - title: Holm
+          name:  holm
+        - title: Hochberg
+          name:  hochberg
+        - title: Hommel
+          name:  hommel
+      default: tukey
+      
+    - name: ph_plot_intervals_yn
+      title: Display intervals
+      type: Bool
+      default: false 
+
+    - name: ph_plot_significance_yn
+      title: Boxplot with post-poc test results
+      type: Bool
+      default: false 
+      
+    - name: miss_text
+      title: Missing Values Label
+      type: String
+      hidden: true
+...
