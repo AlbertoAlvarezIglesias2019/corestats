@@ -92,10 +92,9 @@ ndformat <- function(x, nd) {
 #' @title Calculate Bonferroni-Adjusted Confidence Intervals for Pairwise Proportions
 #'
 #' @description This function performs pairwise comparisons of proportions for two
-#' categorical variables. It uses `rstatix::pairwise_prop_test()` to get the pairs
-#' and the total number of comparisons, then manually runs `prop.test()` for each
-#' pair, applying a Bonferroni correction to the confidence level to obtain adjusted
-#' confidence intervals.
+#' categorical variables using base R and `data.table` (no `tidyverse` or `rstatix`).
+#' It calculates counts and applies a Bonferroni correction to the confidence level 
+#' to obtain adjusted confidence intervals.
 #'
 #' @param data A data frame containing the two categorical variables.
 #' @param ccc A character string specifying the name of the first categorical variable (column variable).
@@ -110,22 +109,11 @@ ndformat <- function(x, nd) {
 #'     \item `conf.high`: The upper bound of the Bonferroni-adjusted confidence interval.
 #'   }
 #'
-#' @details
-#' The function first identifies all pairwise combinations of the levels of the
-#' `ccc` variable. For each pair, it calculates the counts for the first level
-#' of the `rrr` variable. It then applies a Bonferroni correction to the
-#' confidence level (alpha = 0.05) by dividing it by the total number of
-#' comparisons. This adjusted confidence level is used in `stats::prop.test()`
-#' to calculate the confidence interval for the difference in proportions, resulting
-#' in a wider, more conservative interval that accounts for multiple testing.
-#'
-#' @seealso \code{\link[rstatix]{pairwise_prop_test}}, \code{\link[stats]{prop.test}}
-#'
 #' @examples
 #' # Create a sample data frame
 #' data_df <- data.frame(
-#'   gender = factor(c(rep("Male", 30), rep("Female", 20),"Binary")),
-#'   opinion = factor(c(rep("Agree", 15), rep("Disagree", 15), rep("Agree", 10), rep("Disagree", 10),"Disagree"))
+#'   gender = factor(c(rep("Male", 30), rep("Female", 20), "Binary")),
+#'   opinion = factor(c(rep("Agree", 15), rep("Disagree", 15), rep("Agree", 10), rep("Disagree", 10), "Disagree"))
 #' )
 #'
 #' # Calculate the adjusted confidence intervals
@@ -137,68 +125,72 @@ ndformat <- function(x, nd) {
 #'
 #' # Print the results
 #' print(intervals)
+#' @export
 getintervals_bc <- function(data, ccc, rrr) {
   
+  if (is.function(data) || missing(data)) {
+    stop("The 'data' argument must be a valid data frame or data.table.")
+  }
   
-  df <- data %>%
-    dplyr::select(all_of(c(rrr,ccc) )) %>% 
-    na.omit()
+  # --- 1. PREPARE DATA ---
+  df <- as.data.frame(data)
+  df_clean <- df[!is.na(df[[rrr]]) & !is.na(df[[ccc]]), c(rrr, ccc), drop = FALSE]
   
-  colu <- droplevels(df[[ccc]])
-  rows <- droplevels(df[[rrr]])
-  rows1 <- dplyr::if_else(rows == levels(rows)[1],levels(rows)[1],"OOtthheerr")
-  rows1 <- factor(rows1,levels = c(levels(rows)[1],"OOtthheerr"))
+  colu <- droplevels(factor(df_clean[[ccc]]))
+  rows <- droplevels(factor(df_clean[[rrr]]))
   
-  xtab <- table(rows1,colu)
+  first_level <- levels(rows)[1]
+  groups <- levels(colu)
   
-  #colu <- data[[ccc]]
-  #rows <- data[[rrr]]
-  #rows1 <- dplyr::if_else(rows == levels(rows)[1],levels(rows)[1],"Other")
-  #rows1 <- factor(rows1,levels = c(levels(rows)[1],"Other"))
-  #xtab <- table(rows1,colu)
+  if (length(groups) < 2) {
+    stop("The column variable must have at least 2 levels.")
+  }
   
-  fit <- t(xtab) %>% rstatix::pairwise_prop_test()
+  # Generate all pairwise combinations
+  pairs <- utils::combn(groups, 2, simplify = FALSE)
+  n_comparisons <- length(pairs)
   
+  # Bonferroni adjustment
+  alpha <- 0.05
+  conf_level_adj <- 1 - (alpha / n_comparisons)
   
-  ######################
-  ### Get the intervals
-  ######################
-  temp <- lapply(1:dim(fit)[1],function(iii){
-    g1 <- fit$group1[iii]
-    g2 <- fit$group2[iii]
-    df1 <- data %>% 
-      dplyr::filter(.data[[ccc]] %in% c(g1,g2) ) %>% 
-      dplyr::count(.data[[ccc]])
-    df2 <- data %>% 
-      dplyr::filter(.data[[ccc]] %in% c(g1,g2) ) %>% 
-      dplyr::count(.data[[ccc]],.data[[rrr]])
+  # --- 2. CALCULATE INTERVALS FOR EACH PAIR ---
+  res_list <- lapply(pairs, function(p) {
+    g1 <- p[1]
+    g2 <- p[2]
     
-    x1 <- df2 %>% dplyr::filter(.data[[ccc]]==g1 & .data[[rrr]]==levels(rows)[1]) %>% pull(n)
-    if (length(x1)==0) x1 <- 0
-    n1 <- df1 %>% dplyr::filter(.data[[ccc]]==g1) %>% pull(n)
-    x2 <- df2 %>% dplyr::filter(.data[[ccc]]==g2 & .data[[rrr]]==levels(rows)[1]) %>% pull(n)
-    if (length(x2)==0) x2 <- 0
-    n2 <- df1 %>% dplyr::filter(.data[[ccc]]==g2) %>% pull(n)
+    # Filter subset for the two groups
+    sub_df <- df_clean[df_clean[[ccc]] %in% c(g1, g2), , drop = FALSE]
+    sub_colu <- factor(sub_df[[ccc]], levels = c(g1, g2))
+    sub_rows <- sub_df[[rrr]]
     
-    ## Correct for bonferroni
-    n_comparisons <- nrow(fit)
-    alpha <- 0.05
-    conf_level_adj <- 1 - (alpha / n_comparisons)
+    # Total counts per group
+    n1 <- sum(sub_colu == g1)
+    n2 <- sum(sub_colu == g2)
     
-    # Run the test
-    ptest <- prop.test(c(x1,x2),c(n1,n2),conf.level=conf_level_adj)
+    # Success counts (first level of rrr)
+    x1 <- sum(sub_colu == g1 & sub_rows == first_level, na.rm = TRUE)
+    x2 <- sum(sub_colu == g2 & sub_rows == first_level, na.rm = TRUE)
     
-    # Calculate and format descriptive statistics.
-    data.frame(group1=g1,
-               group2=g2,
-               estimate = ptest$estimate[1] - ptest$estimate[2],
-               conf.low = ptest$conf.int[1],
-               conf.high = ptest$conf.int[2])
+    # Run prop.test with adjusted confidence level
+    ptest <- stats::prop.test(c(x1, x2), c(n1, n2), conf.level = conf_level_adj, correct = FALSE)
+    
+    data.table::data.table(
+      group1 = g1,
+      group2 = g2,
+      estimate = ptest$estimate[1] - ptest$estimate[2],
+      conf.low = ptest$conf.int[1],
+      conf.high = ptest$conf.int[2]
+    )
   })
-  out <- do.call("rbind",temp)
-  row.names(out) <- NULL
-  out
+  
+  out <- data.table::rbindlist(res_list)
+  out_df <- as.data.frame(out)
+  row.names(out_df) <- NULL
+  
+  return(out_df)
 }
+
 
 
 
